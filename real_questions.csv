@@ -1,0 +1,404 @@
+subject,question_text,option_a,option_b,option_c,option_d,correct_answer
+AI,Which optimization algorithm adapts learning rates per parameter and has momentum?,Adam,RMSprop,SGD,Adagrad,A
+AI,What causes vanishing gradients in deep networks?,Small weight initialization,High learning rates,Large batch sizes,Sigmoid activation saturation,D
+AI,Which technique prevents catastrophic forgetting in continual learning?,Fine-tuning,Transfer learning,Elastic Weight Consolidation,Data augmentation,C
+AI,What is the time complexity of A* search with branching factor b and depth d?,O(b^d),O(bd),O(d^b),O(b*d),A
+AI,Which loss function is robust to outliers in regression?,MSE,MAE,Huber loss,Cross-entropy,C
+AI,What does the attention mechanism in transformers compute?,Weighted sum of values,Gradient updates,Feature maps,Activation functions,A
+AI,Which technique addresses class imbalance without generating synthetic data?,SMOTE,Cost-sensitive learning,Random oversampling,Data augmentation,B
+AI,What is the main advantage of policy gradient methods over value-based RL?,Sample efficiency,Continuous action spaces,Faster convergence,Lower variance,B
+AI,Which neural architecture is most suitable for graph-structured data?,CNN,RNN,Autoencoder,Graph Neural Network,D
+AI,What does the Kullback-Leibler divergence measure?,Distance between distributions,Gradient magnitude,Loss function value,Activation strength,A
+AI,Which regularization technique randomly zeros out neurons during training?,L1 regularization,Dropout,L2 regularization,Batch normalization,B
+AI,What is the purpose of layer normalization in transformers?,Prevent overfitting,Reduce parameters,Stabilize training,Increase depth,C
+AI,Which algorithm is used for finding optimal policy in finite MDPs?,Q-learning,Value iteration,Policy iteration,SARSA,C
+AI,What does perplexity measure in language models?,Model complexity,Training time,Memory usage,Quality of predictions,D
+AI,Which technique helps with mode collapse in GANs?,Batch normalization,Instance normalization,Layer normalization,Spectral normalization,D
+AI,What is the main challenge in multi-agent reinforcement learning?,Non-stationary environment,Computational complexity,Memory requirements,Data collection,A
+AI,Which method estimates uncertainty in neural network predictions?,Dropout at test time,All of these,Ensemble methods,Bayesian neural networks,B
+AI,What does the reparameterization trick enable in VAEs?,Faster training,Differentiable sampling,Better reconstruction,Lower latency,B
+AI,Which search algorithm guarantees optimality with admissible heuristic?,A*,BFS,DFS,Greedy best-first,A
+AI,What is the main benefit of residual connections in deep networks?,Faster training,Gradient flow,Memory efficiency,Parameter sharing,B
+AI,Which technique addresses the exploration-exploitation tradeoff?,ε-greedy,Upper Confidence Bound,Thompson sampling,All of these,D
+AI,What does mutual information measure between variables?,Linear correlation,Feature importance,Causal relationship,Statistical dependence,D
+AI,Which loss function is used for training discriminator in GANs?,Binary cross-entropy,MSE,KL divergence,Wasserstein loss,A
+AI,What is the computational complexity of training a transformer?,O(n log n),O(n^2),O(n),O(n^3),B
+AI,Which technique prevents internal covariate shift?,Dropout,Batch normalization,Weight decay,Data augmentation,B
+AI,What does the critic network estimate in actor-critic methods?,Value function,Policy gradient,Action probabilities,Reward signal,A
+AI,Which algorithm is used for approximate inference in Bayesian networks?,Exact inference,MCMC,Variational inference,Belief propagation,C
+AI,What is the main advantage of attention over RNNs for sequences?,Lower complexity,Memory efficiency,Parallelization,Faster inference,C
+AI,Which technique addresses distribution shift in domain adaptation?,Fine-tuning,Adversarial training,All of these,Feature alignment,C
+AI,What does the evidence lower bound (ELBO) optimize in VAEs?,Reconstruction loss,KL divergence,Both A and B,Neither A nor B,C
+AI,Which method handles variable-length sequences in RNNs?,All of these,Masking,Packing,Padding,A
+AI,What is the purpose of temperature scaling in softmax?,Calibration,Smoothing,Sharpening,Normalization,A
+AI,Which technique improves sample efficiency in model-free RL?,Experience replay,Target networks,All of these,Double Q-learning,C
+AI,What does the discriminator loss encourage in adversarial training?,Both A and B,Fake data detection,Real data classification,Neither A nor B,A
+AI,Which method addresses the credit assignment problem in RL?,Temporal difference learning,Monte Carlo methods,Eligibility traces,All of these,D
+AI,What is the main challenge in few-shot learning?,Computational cost,Model complexity,Data scarcity,Evaluation metrics,C
+AI,Which technique enables differentiable neural architecture search?,Gumbel softmax,All of these,REINFORCE,Straight-through estimator,B
+AI,What does the reconstruction loss in autoencoders minimize?,Latent space variance,Input-output difference,Model complexity,Training time,B
+AI,Which algorithm optimizes hyperparameters efficiently?,Grid search,Random search,Bayesian optimization,Manual tuning,C
+AI,What is the main benefit of multi-head attention?,Different representation subspaces,Parallel processing,Reduced parameters,Faster training,A
+AI,Which technique addresses the bias-variance tradeoff?,Regularization,Cross-validation,Ensemble methods,All of these,D
+AI,What does the generator loss minimize in GANs?,Real data likelihood,Fake data detection,Discriminator accuracy,Distribution divergence,C
+AI,Which method handles sequential decision making under uncertainty?,All of these,Reinforcement learning,Markov decision process,Dynamic programming,A
+AI,What is the purpose of pre-training in transfer learning?,Feature extraction,Domain adaptation,Knowledge transfer,All of these,D
+AI,Which technique improves convergence in deep learning?,Learning rate scheduling,Gradient clipping,All of these,Weight initialization,C
+AI,What does the policy gradient theorem provide?,Gradient of expected return,Optimal policy,Value function,Action probabilities,A
+AI,Which method addresses the curse of dimensionality?,All of these,Feature selection,Regularization,Dimensionality reduction,A
+AI,What is the main advantage of graph convolutional networks?,Spatial locality,Parameter sharing,All of these,Permutation invariance,C
+AI,Which technique enables continual learning without forgetting?,Memory replay,Parameter isolation,Knowledge distillation,All of these,D
+AI,What does the Bellman equation express?,Optimal policy,State transition,Reward maximization,Value function recursion,D
+React,What is the purpose of React.StrictMode in development?,Enable strict type checking,Enable concurrent features,Improve performance,Detect unsafe lifecycles and APIs,D
+React,How does React's reconciliation algorithm work?,Rebuilds entire DOM,Updates all components,Compares virtual DOM trees,Batches all updates,C
+React,What is the difference between useCallback and useMemo?,They are identical,Both memoize values,Both memoize functions,useCallback memoizes functions useMemo values,D
+React,When should you use React.forwardRef?,To manage state,To create class components,To handle errors,To pass refs through components,D
+React,What does React.lazy enable?,Async state updates,Lazy loading of data,Delayed rendering,Code splitting for components,D
+React,How does the React Fiber architecture improve performance?,Enables time-slicing and prioritization,Reduces bundle size,Improves memory usage,Faster initial render,A
+React,What is the purpose of the key prop in React lists?,Helps React identify which items changed,Provides unique styling,Enables event handling,Controls component order,A
+React,How do you implement error boundaries in functional components?,Error boundaries require class components,Using try-catch blocks,Using useErrorBoundary hook,Using useEffect cleanup,A
+React,What is the difference between controlled and uncontrolled components?,Controlled uses only props,Both are the same,Uncontrolled uses refs only,Controlled manages state React vs DOM,D
+React,How does React's context API prevent unnecessary re-renders?,It doesn't prevent them,By splitting contexts,Through value memoization,By using React.memo,B
+React,What is the purpose of useImperativeHandle hook?,Handle imperative updates,Customize ref instance value,Manage component lifecycle,Control rendering behavior,B
+React,How do you optimize React app bundle size?,Use class components,Minimize component props,Code splitting lazy loading tree shaking,Avoid using hooks,C
+React,What is the difference between useEffect and useLayoutEffect?,They have same timing,Both run after render,useEffect runs synchronously,useLayoutEffect runs synchronously after mutations,D
+React,How does React handle synthetic events?,Wraps native events for consistency,Creates custom event system,Bypasses browser events,Uses only native events,A
+React,What is the purpose of React DevTools Profiler?,Inspect network requests,Debug component props,View component hierarchy,Measure component performance,D
+React,How do you implement code splitting in React Router?,Through webpack configuration,Using dynamic imports only,Using React.lazy and Suspense,By splitting route files,C
+React,What is the difference between React.PureComponent and React.memo?,Both work with functions,PureComponent for classes memo for functions,Both work with classes,They are identical,B
+React,How does React handle batching of state updates?,Processes updates immediately,Groups multiple setState calls,Queues all updates separately,Debounces update calls,B
+React,What is the purpose of the useReducer hook?,API data fetching,Complex state management,Side effect handling,Component optimization,B
+React,How do you prevent memory leaks in React components?,Use WeakMap for data,Cleanup in useEffect return,Avoid state updates,Use class components only,B
+React,What is the difference between useState and useRef?,useState triggers re-renders useRef doesn't,Both trigger re-renders,Both store mutable values,They serve same purpose,A
+React,How does React's concurrent features improve UX?,Faster API calls,Reduces bundle size,Improves SEO,Enables time-slicing and interruption,D
+React,What is the purpose of React.Suspense?,Handle async operations gracefully,Manage component state,Control component lifecycle,Optimize performance,A
+React,How do you implement custom hooks in React?,Extract stateful logic into functions,Create class-based utilities,Use higher-order components,Extend React.Component,A
+React,What is the difference between props and state?,Both are immutable,Both are mutable,Props are immutable state is mutable,They are identical,C
+React,How does React handle component composition?,Using inheritance,Through props.children and render props,Through mixins,Via global state,B
+React,What is the purpose of the useDeferredValue hook?,Defer non-urgent updates,Cache computed values,Handle async operations,Optimize re-renders,A
+React,How do you implement drag and drop in React?,Use HTML5 drag API with event handlers,Use external library only,Implement custom mouse events,Use CSS transforms only,A
+React,What is the difference between mount and update phases?,Mount is initial render update is re-render,Both are same phase,Mount happens after update,Update happens once,A
+React,How does React handle component communication?,Global variables only,Props down callbacks up context,Direct component access,Browser storage,B
+React,What is the purpose of the useTransition hook?,Optimize performance,Handle loading states,Manage component transitions,Mark updates as non-urgent,D
+React,How do you implement infinite scrolling in React?,CSS overflow scroll,Intersection Observer with state management,Timer-based loading,Window scroll events only,B
+React,What is the difference between client and server rendering?,Client renders in browser server pre-renders,Both render same way,Server rendering is slower,Client rendering improves SEO,A
+React,How does React handle form validation?,HTML5 validation only,Built-in validation API,Controlled components with validation logic,External validation libraries only,C
+React,What is the purpose of React.Fragment?,Group elements without wrapper DOM,Create document fragments,Handle component errors,Optimize rendering,A
+React,How do you implement responsive design in React?,Flexbox only,CSS Grid only,Media queries CSS-in-JS responsive hooks,Fixed breakpoints only,C
+React,What is the difference between shallow and deep comparison?,Both compare values,Shallow compares references deep compares values,Both compare references,They are identical,B
+React,How does React handle accessibility?,External accessibility libraries,Built-in accessibility API,Automatic accessibility fixes,ARIA attributes semantic HTML focus management,D
+React,What is the purpose of the useId hook?,Manage component state,Create component keys,Handle form submissions,Generate unique IDs for accessibility,D
+React,How do you implement virtualization in React?,Cache all components,Render only visible items,Use CSS transforms,Pre-render everything,B
+React,What is the difference between development and production builds?,Development includes debugging tools,Both are identical,Production is uncompressed,Development is faster,A
+React,How does React handle portal rendering?,Inline component rendering,Create new React roots,Use document fragments,Render components outside root DOM,D
+React,What is the purpose of the useInsertionEffect hook?,Handle component insertion,Insert styles before layout effects,Manage DOM insertions,Control render timing,B
+React,How do you implement animation in React?,CSS transitions React Spring Framer Motion,JavaScript timers only,CSS keyframes only,Browser animation API,A
+React,What is the difference between state and props flow?,State is local props flow down,Both flow bidirectionally,Both are global,They don't flow,A
+React,How does React handle component testing?,Browser automation only,Built-in testing framework,Testing Library Jest Enzyme,Manual testing only,C
+React,What is the purpose of React.startTransition?,Start component animations,Mark updates as non-urgent transitions,Begin async operations,Initialize component state,B
+React,How do you implement micro-frontends with React?,Iframe embedding only,Module federation single-spa,Server-side includes,Component libraries only,B
+React,What is the difference between React and React DOM?,React DOM is deprecated,Both are same library,React is core library ReactDOM renders,React includes DOM methods,C
+React,How does React handle component lifecycle in hooks?,Manual lifecycle control,Built-in lifecycle methods,Automatic lifecycle management,useEffect useLayoutEffect cleanup,D
+DevOps,What is the primary benefit of immutable infrastructure?,Faster application performance,Reduced storage costs,Consistent deployments and easier rollbacks,Simplified development workflow,C
+DevOps,Which tool provides declarative infrastructure as code for multiple cloud providers?,Terraform,Ansible,CloudFormation,Chef,A
+DevOps,What does the CAP theorem state about distributed systems?,None can be guaranteed,All three can be achieved,Only one can be guaranteed,Consistency Availability Partition-tolerance pick 2,D
+DevOps,How does blue-green deployment minimize downtime?,Gradual traffic shifting,Two identical production environments,Rolling updates,Canary releases,B
+DevOps,What is the purpose of a service mesh in microservices?,Service-to-service communication and observability,Container orchestration,API gateway functionality,Database connectivity,A
+DevOps,Which metric best measures deployment success rate?,Lead time for changes,Mean time to recovery,Deployment frequency,Change failure rate,D
+DevOps,What does GitOps primarily focus on?,Container image management,Version control for applications,Automated testing pipelines,Git as single source of truth for operations,D
+DevOps,How does chaos engineering improve system reliability?,Automating deployment processes,Optimizing system performance,Deliberately introducing failures to test resilience,Monitoring system metrics,C
+DevOps,What is the main advantage of container orchestration?,Automated scaling load balancing service discovery,Faster container startup,Smaller container images,Better container security,A
+DevOps,Which approach best handles secrets in CI/CD pipelines?,Environment variables,External secret management systems,Configuration files,Hard-coded values,B
+DevOps,What does observability encompass in modern systems?,Monitoring only,Metrics logs traces,Alerting only,Performance testing,B
+DevOps,How does feature flagging support continuous deployment?,Faster build times,Decouple deployment from release,Better test coverage,Reduced security risks,B
+DevOps,What is the primary goal of shift-left security?,Reducing security team size,Moving security to production,Early integration of security in development,Automating security scans,C
+DevOps,Which pattern best handles microservices data consistency?,Shared database,Saga pattern for distributed transactions,Two-phase commit,Global transactions,B
+DevOps,What does SRE emphasize for service reliability?,Error budgets and SLOs,Perfect uptime,Manual interventions,Reactive monitoring,A
+DevOps,How does progressive delivery reduce deployment risk?,Automated rollback triggers,Faster deployment speed,Gradual feature rollout with monitoring,Perfect testing coverage,C
+DevOps,What is the benefit of ephemeral environments?,Isolated testing and faster feedback,Reduced infrastructure costs,Permanent test data,Simplified configuration,A
+DevOps,Which approach best manages configuration drift?,Documentation-based tracking,Manual configuration updates,Infrastructure as Code with state management,Periodic audits,C
+DevOps,What does the DORA metrics measure?,Software delivery performance,Application performance,Infrastructure costs,Team productivity,A
+DevOps,How does event-driven architecture improve system resilience?,Faster response times,Loose coupling and asynchronous processing,Reduced complexity,Better user experience,B
+DevOps,What is the primary purpose of a deployment pipeline?,Test case execution,Version control management,Automated path from code to production,Performance monitoring,C
+DevOps,Which strategy best handles database schema migrations?,Database versioning,Immediate schema updates,Manual migration scripts,Backward-compatible changes with feature flags,D
+DevOps,What does compliance as code achieve?,Faster compliance audits,Automated policy enforcement,Reduced compliance costs,Better documentation,B
+DevOps,How does distributed tracing help with debugging?,Faster application performance,End-to-end request flow visibility,Reduced error rates,Better user experience,B
+DevOps,What is the main benefit of policy as code?,Consistent governance across environments,Faster policy updates,Reduced manual oversight,Better compliance reporting,A
+DevOps,Which approach best manages technical debt in DevOps?,Dedicated debt sprints,Continuous refactoring with metrics,Manual code reviews,Documentation updates,B
+DevOps,What does continuous compliance ensure?,Ongoing adherence to security standards,One-time compliance checks,Manual compliance reviews,Compliance documentation,A
+DevOps,How does infrastructure testing improve reliability?,Reduced infrastructure costs,Faster deployment cycles,Validating infrastructure behavior before deployment,Better monitoring coverage,C
+DevOps,What is the purpose of deployment strategies automation?,Improved monitoring,Faster deployment speed,Better test coverage,Reduce human error and increase consistency,D
+DevOps,Which pattern best handles service dependencies?,API gateway,Service mesh,Circuit breaker pattern,Load balancer,C
+DevOps,What does continuous security integration provide?,Better compliance scores,Faster security scans,Reduced security costs,Security feedback throughout development lifecycle,D
+DevOps,How does value stream mapping improve delivery?,Identifies bottlenecks and waste in process,Faster development cycles,Better code quality,Improved team collaboration,A
+DevOps,What is the benefit of configuration management tools?,Consistent system state across environments,Faster configuration changes,Reduced manual effort,Better documentation,A
+DevOps,Which approach best handles incident response?,Reactive fixes,Manual monitoring,Automated detection with defined runbooks,Post-incident analysis,C
+DevOps,What does infrastructure observability provide?,Better resource utilization,Faster troubleshooting,Reduced infrastructure costs,Comprehensive visibility into system behavior,D
+DevOps,How does continuous integration improve code quality?,Better documentation,Faster development cycles,Reduced manual testing,Early detection of integration issues,D
+DevOps,What is the primary goal of deployment automation?,Reduced manual effort,Faster deployment cycles,Reliable consistent repeatable deployments,Better monitoring,C
+DevOps,Which strategy best manages environment consistency?,Containerization with infrastructure as code,Manual environment setup,Configuration templates,Environment documentation,A
+DevOps,What does security scanning in pipelines achieve?,Better compliance scores,Faster development cycles,Reduced security costs,Early vulnerability detection,D
+DevOps,How does monitoring-driven development improve systems?,Faster development cycles,Proactive issue detection and resolution,Better code quality,Improved user experience,B
+DevOps,What is the benefit of automated testing in pipelines?,Consistent quality feedback,Faster test execution,Reduced manual effort,Better test coverage,A
+DevOps,Which approach best handles capacity planning?,Predictive scaling based on metrics,Manual capacity adjustments,Fixed resource allocation,Reactive scaling,A
+DevOps,What does continuous deployment enable?,Better code quality,Faster development cycles,Frequent reliable software releases,Improved team productivity,C
+DevOps,How does infrastructure immutability improve security?,Faster security updates,Prevents configuration drift and unauthorized changes,Reduced attack surface,Better compliance scores,B
+DevOps,What is the purpose of runbook automation?,Faster incident resolution,Consistent incident response procedures,Reduced manual effort,Better documentation,B
+DevOps,Which pattern best handles distributed system failures?,Bulkhead pattern for fault isolation,Circuit breaker,Retry logic,Timeout handling,A
+DevOps,What does continuous monitoring provide?,Faster issue resolution,Real-time system health visibility,Reduced monitoring costs,Better performance metrics,B
+DevOps,How does automated remediation improve operations?,Faster incident response,Self-healing systems with reduced manual intervention,Better system performance,Improved user experience,B
+DevOps,What is the benefit of deployment pipelines as code?,Faster deployments,Version-controlled automated deployment processes,Better deployment tracking,Improved rollback capability,B
+DevOps,Which approach best manages secrets rotation?,Periodic rotation,Manual rotation schedules,Static secret management,Automated rotation with zero-downtime updates,D
+CSS,What happens when you use transform: translateZ(0) on an element?,Moves element backward,Creates a new stacking context and GPU layer,Disables transforms,Resets Z-index,B
+CSS,How does CSS containment improve performance?,Improves specificity,Reduces file size,Enables caching,Limits style recalculation and layout scope,D
+CSS,What is the difference between overflow: hidden and clip-path?,Both create same clipping,Hidden clips to box boundaries clip-path uses shapes,Hidden is deprecated,Clip-path only works on SVG,B
+CSS,How do CSS custom properties (variables) cascade?,Follow standard cascade and inheritance rules,Always use global values,Don't cascade at all,Only work in root,A
+CSS,What does isolation: isolate create?,New grid context,New block formatting context,New stacking context,New flex context,C
+CSS,How does aspect-ratio property work?,Maintains width-to-height ratio,Sets fixed dimensions,Controls image scaling,Defines viewport ratio,A
+CSS,What is the purpose of contain: layout style paint?,Enables GPU acceleration,Prevents content overflow,Creates new contexts,Optimizes rendering performance through containment,D
+CSS,How does CSS Houdini extend styling capabilities?,Improves browser compatibility,Allows custom CSS properties and animations,Reduces file sizes,Enables better caching,B
+CSS,What does backdrop-filter property do?,Filters element background,Applies filters to area behind element,Creates drop shadows,Blurs element content,B
+CSS,How do CSS Grid subgrids work?,Override parent grid,Create nested independent grids,Inherit parent grid lines and gaps,Disable grid inheritance,C
+CSS,What is the difference between inline-size and width?,Width works in all directions,Both are identical,Inline-size is deprecated,Inline-size respects writing mode width doesn't,D
+CSS,How does CSS scroll-behavior: smooth work?,Sets scroll direction,Disables scrolling,Controls scroll speed,Enables smooth scrolling animations,D
+CSS,What does gap property do in Flexbox?,Defines flex direction,Controls flex-grow,Sets container margins,Sets space between flex items,D
+CSS,How do CSS environment variables work?,Store user preferences,Access device/browser specific values,Cache computed values,Enable responsive design,B
+CSS,What is the purpose of overscroll-behavior?,Enables infinite scroll,Prevents horizontal scroll,Controls scrolling past boundaries,Sets scroll speed,C
+CSS,How does CSS @supports rule work?,Imports external styles,Tests browser feature support,Defines media queries,Creates fallback styles,B
+CSS,What does text-decoration-skip-ink do?,Controls text spacing,Removes text decoration,Changes text color,Skips descenders when underlining,D
+CSS,How do CSS scroll anchoring work?,Fixes elements to viewport,Prevents content jumping during load,Creates scroll animations,Enables lazy loading,B
+CSS,What is the difference between revert and initial keywords?,Revert uses browser default initial uses spec default,Both reset to same value,Revert is newer syntax,Initial works everywhere,A
+CSS,How does CSS conic-gradient work?,Deprecated gradient type,Linear gradients only,Radial gradients only,Creates gradients around center point,D
+CSS,What does content-visibility optimize?,Font rendering,Image loading,Rendering performance by skipping offscreen content,Animation performance,C
+CSS,How do CSS container queries work?,Container-specific animations,Media queries for containers,Style based on container size not viewport,Deprecated querying method,C
+CSS,What is the purpose of CSS accent-color?,Styles form control accents,Changes text accent marks,Controls focus colors,Sets theme colors,A
+CSS,How does CSS cascade layers work?,Provides more control over cascade order,Creates visual layers,Enables 3D transforms,Manages z-index stacking,A
+CSS,What does color-scheme property control?,Color accessibility,Color palette selection,Color space conversion,Dark/light mode preferences,D
+CSS,How do CSS math functions work?,Format numbers,Perform calculations in CSS values,Validate numeric input,Generate random values,B
+CSS,What is the purpose of CSS scroll-snap?,Prevents scrolling,Controls scroll stopping positions,Enables smooth scroll,Sets scroll direction,B
+CSS,How does CSS mask property work?,Clips element using image or gradient,Creates drop shadows,Applies filters,Controls opacity,A
+CSS,What does CSS object-view-box do?,Controls object scaling,Sets object dimensions,Defines viewable area of replaced element,Positions object content,C
+CSS,How do CSS motion path animations work?,Control timing functions,Create keyframe animations,Animate elements along defined paths,Set animation duration,C
+CSS,What is the difference between CSS Grid and Subgrid?,Subgrid inherits parent grid structure,Both create independent grids,Subgrid is deprecated,Grid doesn't support nesting,A
+CSS,How does CSS paint worklet work?,Enables custom CSS painting via JavaScript,Applies predefined paint styles,Controls element painting order,Optimizes paint performance,A
+CSS,What does CSS font-display control?,Font family selection,Font loading and rendering behavior,Font size calculation,Font style application,B
+CSS,How do CSS anchor positioning work?,Enables sticky positioning,Creates fixed positioning,Position elements relative to anchor points,Controls z-index stacking,C
+CSS,What is the purpose of CSS view-timeline?,Sets animation timing,Controls viewport dimensions,Creates scroll-driven animations,Manages animation sequences,C
+CSS,How does CSS color-mix function work?,Converts color formats,Generates random colors,Blends colors in specified color space,Validates color values,C
+CSS,What does CSS field-sizing control?,Field layout,Field validation,Form control sizing behavior,Field styling,C
+CSS,How do CSS style queries work?,Debug CSS rules,Test CSS support,Validate stylesheets,Query computed style values,D
+CSS,What is the purpose of CSS timeline-scope?,Manages animation state,Controls animation duration,Sets animation delay,Defines animation timeline boundaries,D
+CSS,How does CSS light-dark function work?,Manages color contrast,Controls lighting effects,Creates gradients,Provides values based on color scheme,D
+CSS,What does CSS starting-style define?,Inherited styles,Default element styles,Browser default styles,Initial styles for view transitions,D
+CSS,How do CSS registered custom properties work?,Enable property inheritance,Create CSS variables,Validate property values,Define typed custom properties with JavaScript,D
+CSS,What is the purpose of CSS @scope rule?,Scopes styles to specific DOM subtrees,Creates local stylesheets,Limits CSS specificity,Enables style encapsulation,A
+CSS,How does CSS interpolate-size work?,Sets element dimensions,Controls size interpolation in animations,Manages responsive sizing,Calculates computed sizes,B
+CSS,What does CSS transition-behavior control?,Animation timing,Discrete property transition behavior,Transition duration,Transition delay,B
+CSS,How do CSS view transitions work?,Animate between DOM states,Create viewport animations,Control scroll transitions,Manage page transitions,A
+CSS,What is the purpose of CSS @media(update) query?,Checks for media updates,Tests display refresh capabilities,Validates media support,Controls media loading,B
+CSS,How does CSS font-synthesis-position work?,Sets font positioning,Manages font loading,Controls synthesis of font position variants,Validates font support,C
+CSS,What does CSS white-space-collapse control?,Text wrapping,Whitespace collapsing behavior,Line height,Letter spacing,B
+CSS,How do CSS highlight pseudo-elements work?,Control element focus,Create visual highlights,Style text selections and highlights,Manage hover states,C
+UI/UX,What is the primary goal of Design Thinking methodology?,Reduced development costs,Faster product development,Human-centered problem solving through empathy,Better visual aesthetics,C
+UI/UX,How does Jakob Nielsen's 10 usability heuristics improve interface design?,Establishes typography rules,Creates visual guidelines,Defines color schemes,Provides systematic evaluation framework,D
+UI/UX,What does the Double Diamond design process represent?,Two design iterations,Divergent and convergent thinking phases,Dual user personas,Binary design decisions,B
+UI/UX,How does Fitts's Law apply to interface design?,Smaller elements are more precise,Larger closer targets are easier to acquire,Distance doesn't affect interaction,All targets are equally accessible,B
+UI/UX,What is the purpose of a Design System in large organizations?,Reduced design costs,Faster development cycles,Consistent scalable design language,better team communication,C
+UI/UX,How does progressive disclosure improve user experience?,Increases page loading speed,Shows all information at once,Hides important features,Reveals information gradually reducing cognitive load,D
+UI/UX,What does the Peak-End Rule suggest about user experience?,Average experience is most important,First impressions matter most,Users judge experiences by peak and end moments,Duration affects perception most,C
+UI/UX,How do mental models influence interface design?,Mental models are irrelevant,Designers control user thinking,Interfaces shape user behavior,Users interpret interfaces based on existing knowledge,D
+UI/UX,What is the difference between formative and summative usability testing?,Both test final products,Formative improves design summative evaluates,Formative tests functionality summative tests design,Both are conducted after launch,B
+UI/UX,How does the Paradox of Choice affect user interface design?,Too many options can decrease satisfaction,More options always improve experience,Users prefer unlimited choices,Choice quantity doesn't matter,A
+UI/UX,What does Information Architecture focus on in UX design?,Visual design aesthetics,Organizing and structuring content for findability,Color scheme selection,Typography choices,B
+UI/UX,How do affordances communicate functionality in interfaces?,Visual cues suggest possible actions,Hidden functionality is better,Users must learn all functions,Affordances are outdated concept,A
+UI/UX,What is the purpose of user journey mapping?,Design information architecture,Track user analytics,Create user personas,Visualize user experience across touchpoints,D
+UI/UX,How does the Von Restorff effect influence interface design?,Consistency is always preferred,Similar items work better,Distinctive items are better remembered,Memory doesn't affect usability,C
+UI/UX,What does Service Design encompass beyond digital interfaces?,Backend system design,Only digital touchpoints,Customer service training,End-to-end service experience across channels,D
+UI/UX,How do micro-interactions enhance user experience?,Slow down interactions,Add unnecessary animations,Provide feedback and guide user actions,Complicate simple tasks,C
+UI/UX,What is the difference between accessibility and inclusive design?,Inclusive design is outdated,Both are identical approaches,Accessibility is only for disabilities,Inclusive design considers broader human diversity,D
+UI/UX,How does the Fogg Behavior Model apply to UX design?,Triggers are unnecessary,Only motivation matters,Ability is most important factor,Behavior requires motivation ability and trigger,D
+UI/UX,What does Design Ops aim to achieve in organizations?,Reduce design team size,Scale design processes and improve efficiency,Eliminate design reviews,Automate all design work,B
+UI/UX,How do dark patterns harm user experience?,Improve conversion rates,Manipulate users into unintended actions,Enhance user engagement,Provide better functionality,B
+UI/UX,What is the purpose of card sorting in information architecture?,Create visual designs,Understand user mental models for grouping,Test interface prototypes,Analyze user behavior,B
+UI/UX,How does the Jobs-to-be-Done framework inform design?,Analyze competitor features,Categorize user types,Focus on user goals rather than demographics,Create feature specifications,C
+UI/UX,What does cross-cultural design consider?,Cultural differences in design interpretation,Universal design principles,Single global approach,Technical constraints only,A
+UI/UX,How do usability metrics differ from user experience metrics?,Usability measures efficiency UX measures satisfaction,Both measure same things,Usability is more important,UX metrics are subjective,A
+UI/UX,What is the purpose of design critique sessions?,Assign design tasks,Approve final designs,Improve design through structured feedback,Schedule project milestones,C
+UI/UX,How does the Kano Model categorize feature types?,High medium low priority,Basic expected and delighter features,Must-have and nice-to-have,Technical and design features,B
+UI/UX,What does behavioral economics contribute to UX design?,Technical implementation guidance,Market research insights,Understanding of human decision-making biases,Visual design principles,C
+UI/UX,How do design patterns improve user experience?,Reduce development time,Provide familiar interaction models,Improve visual consistency,Enable code reuse,B
+UI/UX,What is the difference between user testing and usability testing?,Both are identical,User testing is broader usability focuses on ease of use,User testing is outdated,Usability testing is more important,B
+UI/UX,How does the concept of flow state apply to interface design?,Seamless focused user engagement,Fast loading times,Smooth animations,Linear user paths,A
+UI/UX,What does design validation aim to achieve?,Finalize visual specifications,Get stakeholder approval,Complete design documentation,Confirm design solutions meet user needs,D
+UI/UX,How do cognitive biases affect user interface design?,Influence user perception and decision making,Don't impact design decisions,Only affect visual elements,Are irrelevant to UX,A
+UI/UX,What is the purpose of design research in the design process?,Justify design choices,Inform design decisions with user insights,Document design rationale,Satisfy stakeholder requirements,B
+UI/UX,How does the concept of emotional design influence UX?,Creates emotional connections between users and products,Only focuses on visual appeal,Emphasizes functionality over emotion,Is purely aesthetic concern,A
+UI/UX,What does design strategy encompass in organizations?,Visual brand guidelines,Alignment of design with business objectives,Design tool selection,Team hiring decisions,B
+UI/UX,How do accessibility standards like WCAG improve design?,Limit design creativity,Only address visual impairments,Are legal requirements only,Ensure usable experiences for people with disabilities,D
+UI/UX,What is the purpose of design documentation?,Track design changes,Store design files,Archive old designs,Communicate design decisions and specifications,D
+UI/UX,How does the concept of design debt impact product development?,Unpaid design invoices,Accumulation of suboptimal design decisions,Outdated design tools,Unused design components,B
+UI/UX,What does continuous user research provide to design teams?,Final design validation,One-time user feedback,Ongoing insights for iterative improvement,Competitive analysis data,C
+UI/UX,How do design metrics help measure design success?,Monitor design tool usage,Track design team productivity,Quantify design impact on user behavior and business,Count design deliverables,C
+UI/UX,What is the difference between design systems and style guides?,Style guides are more comprehensive,Both are identical,Systems include components and patterns guides cover visuals,Design systems are outdated,C
+UI/UX,How does the concept of design maturity affect organizations?,Evaluates design tool adoption,Measures design team experience,Counts years using design,Indicates sophistication of design practices and culture,D
+UI/UX,What does design leadership focus on in organizations?,Selecting design tools,Managing design budgets,Strategic design vision and team development,Approving design work,C
+UI/UX,How do design principles guide design decisions?,Set technical constraints,Restrict creative freedom,Define visual aesthetics,Provide fundamental beliefs about good design,D
+UI/UX,What is the purpose of design workshops in the design process?,Train design tools,Present final designs,Collaborative problem-solving and alignment,Review design portfolios,C
+UI/UX,How does the concept of design empathy influence user research?,Agreeing with all user feedback,Feeling sorry for users,Understanding user perspectives and experiences,Personalizing design solutions,C
+UI/UX,What does design ethics consider in digital product development?,Moral responsibilities of design decisions,Legal compliance requirements,Privacy policy creation,Terms of service writing,A
+UI/UX,How do design trends impact long-term product strategy?,Always follow latest trends,Balance innovation with usability and brand consistency,Ignore trends completely,Change designs frequently,B
+UI/UX,What is the purpose of design portfolios for UX professionals?,Demonstrate design thinking and problem-solving skills,Showcase visual design abilities,List completed projects,Display design tools used,A
+UI/UX,How does the concept of design collaboration improve outcomes?,Diverse perspectives lead to better solutions,Reduces individual responsibility,Speeds up design process,Eliminates design conflicts,A
+Python,What is the Global Interpreter Lock (GIL) and how does it affect multithreading?,Prevents true parallelism in CPU-bound threads,Enables faster single-threaded execution,Protects memory from corruption,Manages garbage collection,A
+Python,How do Python descriptors work and when would you use them?,Handle exceptions,Create class documentation,Manage inheritance,Control attribute access through __get__ __set__ __delete__,D
+Python,What is the difference between __new__ and __init__ methods?,They are identical,Both create instances,Both initialize instances,__new__ creates instance __init__ initializes it,D
+Python,How does Python's memory management and garbage collection work?,Manual memory management,Reference counting with cycle detection,Automatic stack allocation,Static memory allocation,B
+Python,What are Python metaclasses and how do they work?,Class inheritance mechanism,Enhanced class methods,Classes that create classes,Class documentation system,C
+Python,How do Python decorators work internally?,Method overloading system,Class inheritance mechanism,Wrapper functions that modify behavior,Exception handling framework,C
+Python,What is the difference between deep and shallow copy?,Both copy references only,Both copy everything,Deep copies nested objects shallow copies references,They are identical,C
+Python,How does Python's import system work?,Compile-time linking,Simple file inclusion,Dynamic loading only,Module search path and caching mechanism,D
+Python,What are context managers and how do you implement them?,Exception handling mechanism,Objects with __enter__ and __exit__ methods,Memory management tool,Threading synchronization,B
+Python,How do Python generators work internally?,Concurrent execution mechanism,Functions that return lists,Memory optimization technique,Yield expressions create iterators with state,D
+Python,What is the difference between staticmethod and classmethod?,staticmethod gets class,Both get instance,Both are identical,staticmethod no implicit args classmethod gets class,D
+Python,How does Python's MRO (Method Resolution Order) work?,Alphabetical ordering,Random method selection,C3 linearization algorithm for inheritance,First-defined method wins,C
+Python,What are Python coroutines and how do they differ from generators?,Thread-based concurrency,Same as generators,Cooperative multitasking with async/await,Process-based parallelism,C
+Python,How does Python's asyncio event loop work?,Synchronous execution only,Multi-threaded execution,Multi-process execution,Single-threaded cooperative multitasking,D
+Python,What is monkey patching and when is it useful?,Debugging technique,Design pattern,Testing framework,Runtime modification of classes or modules,D
+Python,How do Python's special methods (__dunder__ methods) work?,Define object behavior for operators and functions,Private methods,Debug methods,Documentation methods,A
+Python,What is the difference between is and == operators?,is tests identity == tests equality,Both test identity,Both test equality,They are identical,A
+Python,How does Python's closure work?,Class method binding,Global variable access,Inner functions capture outer scope variables,Module import mechanism,C
+Python,What are Python's data model protocols?,Database interaction patterns,Data validation rules,Define how objects behave with language constructs,API design patterns,C
+Python,How does Python's super() function work?,Calls all parent methods,Always accesses immediate parent,Creates new instance,Accesses parent class methods in MRO order,D
+Python,What is the difference between bound and unbound methods?,They are identical,Both have instances,Both lack instances,Bound methods have instance unbound don't,D
+Python,How do Python's weak references work?,Encrypted references,Faster reference access,References that don't prevent garbage collection,Compressed references,C
+Python,What are Python slots and when should you use them?,Inheritance control,Method optimization,__slots__ restricts attributes and saves memory,Exception handling,C
+Python,How does Python's property decorator work?,Function caching,Method documentation,Class decoration,Creates managed attributes with getter/setter,D
+Python,What is the difference between list comprehensions and generator expressions?,Both create lazily,Both create immediately,Lists create immediately generators create lazily,They are identical,C
+Python,How does Python's threading module work with the GIL?,Useful for I/O-bound tasks not CPU-bound,Enables true parallelism,Bypasses GIL completely,Only works single-threaded,A
+Python,What are Python's abstract base classes (ABC)?,Exception class hierarchy,Concrete class implementations,Multiple inheritance system,Define interfaces without implementation,D
+Python,How does Python's pickle module work?,Compresses files,Serializes objects to binary format,Encrypts data,Validates objects,B
+Python,What is the difference between multiprocessing and threading?,multiprocessing uses processes threading uses threads,Both use processes,Both use threads,They are identical,A
+Python,How do Python's type hints work?,Performance optimization,Runtime type checking,Automatic type conversion,Static type annotations for tools,D
+Python,What are Python's magic methods for container types?,__len__ __getitem__ __setitem__ __delitem__,Built-in functions,Database operations,Network protocols,A
+Python,How does Python's functools.lru_cache work?,Caches function results using LRU eviction,Stores all results permanently,Only caches last result,Doesn't cache anything,A
+Python,What is the difference between @property and descriptors?,property is simpler descriptor is more flexible,Both are identical,property is deprecated,descriptors are simpler,A
+Python,How does Python's collections.namedtuple work?,Creates tuple subclass with named fields,Creates dictionary,Creates list,Creates set,A
+Python,What are Python's context variables?,Class variables,Global variables,Thread-local storage for async code,Function parameters,C
+Python,How does Python's itertools module work?,String manipulation,Mathematical operations,Provides iterator building blocks,File operations,C
+Python,What is the difference between __str__ and __repr__?,Both for users,__str__ for users __repr__ for developers,Both for developers,They are identical,B
+Python,How do Python's dataclasses work?,Validate data types,Automatically generate special methods,Handle exceptions,Manage memory,B
+Python,What are Python's enums and when to use them?,Boolean flags,Integer constants,String constants,Named constants with type safety,D
+Python,How does Python's pathlib module improve file handling?,Better error handling,Faster file operations,Object-oriented path manipulation,Automatic backups,C
+Python,What is the difference between concurrent.futures and asyncio?,Both for parallelism,futures for parallelism asyncio for concurrency,Both for concurrency,They are identical,B
+Python,How do Python's protocols work in typing?,Concrete inheritance,Structural subtyping without inheritance,Interface implementation,Abstract classes,B
+Python,What are Python's singledispatch decorators?,Class decoration,Method decoration,Function overloading based on first argument type,Error handling,C
+Python,How does Python's weakref.WeakKeyDictionary work?,Compressed dictionary,Dictionary with strong references,Read-only dictionary,Dictionary with weak reference keys,D
+Python,What is the difference between __call__ and regular methods?,Both are identical,__call__ makes instances callable like functions,__call__ is deprecated,Regular methods are faster,B
+Python,How do Python's custom exceptions work?,System error integration,Built-in error messages,Automatic error handling,Inherit from Exception with custom behavior,D
+Python,What are Python's class decorators?,Method decorators,Functions that modify classes,Function decorators only,Documentation tools,B
+Python,How does Python's operator module work?,Mathematical operations,Provides function equivalents of operators,Comparison operations,Logical operations,B
+Python,What is the difference between copy.copy and copy.deepcopy?,Both are deep,Both are shallow,copy is shallow deepcopy copies nested objects,They are identical,C
+Python,How do Python's abstract properties work?,Concrete property implementations,Properties in abstract base classes,Property validation,Property caching,B
+Python,What are Python's union types in typing?,Exception handling,Class inheritance,Method overloading,Multiple possible types for variables,D
+Data Science,What is feature engineering and why is it crucial?,Creating relevant features from raw data for models,Data cleaning process,Model selection technique,Visualization method,A
+Data Science,How does cross-validation prevent overfitting in model selection?,Tests on training data,Uses all data for training,Evaluates model performance on unseen data partitions,Ignores validation entirely,C
+Data Science,What is the bias-variance tradeoff in machine learning?,They are unrelated,Only bias matters,Only variance matters,Balance between model simplicity and complexity,D
+Data Science,How does Principal Component Analysis (PCA) reduce dimensionality?,Selects best features,Removes random features,Projects data onto lower-dimensional subspace,Combines all features,C
+Data Science,What is the difference between Type I and Type II errors?,Both are false positives,Type I false positive Type II false negative,Both are false negatives,They are identical,B
+Data Science,How do ensemble methods improve model performance?,Take majority vote,Use single best model,Average all predictions,Combine multiple models to reduce variance,D
+Data Science,What is the curse of dimensionality?,Data sparsity increases with feature dimensions,More features always better,Dimensions don't affect performance,Only affects visualization,A
+Data Science,How does regularization prevent overfitting?,Improves feature selection,Removes outliers,Increases training data,Adds penalty for model complexity,D
+Data Science,What is the difference between supervised and unsupervised learning?,They are identical,Both use labeled data,Both use unlabeled data,Supervised uses labeled data unsupervised doesn't,D
+Data Science,How does gradient descent optimize machine learning models?,Iteratively minimizes loss function,Randomly searches parameters,Uses grid search,Applies genetic algorithms,A
+Data Science,What is the purpose of feature scaling?,Select important features,Remove outliers,Normalize features to similar ranges,Handle missing values,C
+Data Science,How do decision trees make predictions?,Distance calculations,Linear combinations,Recursive binary splits based on features,Probability distributions,C
+Data Science,What is the difference between bagging and boosting?,They are identical,Both are parallel,Both are sequential,Bagging parallel boosting sequential,D
+Data Science,How does k-means clustering work?,Density-based clustering,Hierarchical grouping,Iteratively assigns points to nearest centroids,Graph-based clustering,C
+Data Science,What is the purpose of A/B testing in data science?,Explore data patterns,Test model accuracy,Validate data quality,Compare treatment effects statistically,D
+Data Science,How does logistic regression differ from linear regression?,Both for regression,Both for classification,Logistic for classification linear for regression,They are identical,C
+Data Science,What is the concept of statistical significance?,Effect size magnitude,Practical importance,Probability result occurred by chance,Sample size requirement,C
+Data Science,How do neural networks learn from data?,Fixed weight assignments,Random weight updates,Backpropagation adjusts weights based on errors,Manual parameter tuning,C
+Data Science,What is the purpose of data preprocessing?,Deploy solutions,Visualize results,Build models,Prepare data for analysis and modeling,D
+Data Science,How does time series analysis differ from cross-sectional analysis?,Both use same methods,Both ignore time,Time series uses temporal ordering,Cross-sectional uses time,C
+Data Science,What is the difference between correlation and causation?,Both show causation,Correlation shows association causation shows cause-effect,Both show correlation,They are identical,B
+Data Science,How do recommender systems work?,Collaborative filtering and content-based methods,Random suggestions,Popular items only,User preferences ignored,A
+Data Science,What is the purpose of dimensionality reduction?,Increase model complexity,Reduce features while preserving information,Add more features,Remove all features,B
+Data Science,How does natural language processing extract insights from text?,Rule-based systems only,Manual text analysis,Tokenization feature extraction modeling,Dictionary lookups only,C
+Data Science,What is the difference between precision and recall?,They are identical,Both measure accuracy,Both measure error rate,Precision true positives/predicted recall true positives/actual,D
+Data Science,How do support vector machines classify data?,Find optimal hyperplane separating classes,Use nearest neighbors,Apply decision rules,Calculate probabilities,A
+Data Science,What is the purpose of data visualization?,Store data efficiently,Communicate insights and patterns effectively,Process data faster,Collect more data,B
+Data Science,How does clustering evaluation work without ground truth?,Random assignment,External validation only,Manual inspection,Internal metrics like silhouette score,D
+Data Science,What is the difference between parametric and non-parametric methods?,Neither assumes distributions,Both assume distributions,Parametric assumes distribution non-parametric doesn't,They are identical,C
+Data Science,How do outliers affect statistical analysis?,Should never be removed,Always improve results,Have no effect,Can skew results and model performance,D
+Data Science,What is the purpose of hypothesis testing?,Statistically test claims about populations,Prove hypotheses true,Generate new hypotheses,Collect more data,A
+Data Science,How does feature selection improve model performance?,Uses all available features,Adds more features,Removes irrelevant features reducing overfitting,Ignores feature importance,C
+Data Science,What is the difference between batch and online learning?,Both update incrementally,Both use all data,Batch uses all data online updates incrementally,They are identical,C
+Data Science,How do missing values affect analysis?,Can introduce bias and reduce statistical power,Always improve results,Have no effect,Should be ignored,A
+Data Science,What is the purpose of model validation?,Train better models,Assess model performance on unseen data,Collect more data,Visualize results,B
+Data Science,How does deep learning differ from traditional machine learning?,Manual feature engineering only,Automatic feature learning through layers,Same feature engineering,No feature engineering,B
+Data Science,What is the concept of data drift?,Changes in data distribution over time,Data quality issues,Missing data problems,Outlier detection,A
+Data Science,How do sampling techniques affect analysis?,All methods identical,Different methods introduce different biases,Sampling unnecessary,More data always better,B
+Data Science,What is the purpose of confidence intervals?,Data collection,Point estimates only,Hypothesis testing,Estimate uncertainty in parameter estimates,D
+Data Science,How does model interpretability affect deployment?,Explainable models build trust and enable debugging,Complex models always better,Interpretability unnecessary,Black boxes preferred,A
+Data Science,What is the difference between classification and regression metrics?,Regression uses accuracy,Both use same metrics,Classification uses MSE,Classification uses accuracy regression uses MSE,D
+Data Science,How do imbalanced datasets affect model performance?,Have no effect,Improve performance,Biased toward majority class reducing minority recall,Balance automatically,C
+Data Science,What is the purpose of data governance?,Visualize results,Collect more data,Build better models,Ensure data quality security and compliance,D
+Data Science,How does distributed computing enable big data analysis?,Manual processing,Single machine processing,Sequential processing,Parallel processing across multiple machines,D
+Data Science,What is the difference between exploratory and confirmatory analysis?,They are identical,Both discover patterns,Both test hypotheses,Exploratory discovers patterns confirmatory tests hypotheses,D
+Data Science,How do ethical considerations affect data science projects?,Have no impact,Guide responsible data use and model deployment,Only legal concern,Technical consideration only,B
+Data Science,What is the purpose of data lineage?,Visualize data better,Store data efficiently,Process data faster,Track data origin and transformations,D
+Data Science,How does model monitoring ensure production performance?,Unnecessary after deployment,One-time deployment check,Manual inspection only,Detects drift and performance degradation,D
+Data Science,What is the difference between batch and stream processing?,Batch processes stored data stream processes real-time,Both process stored data,Both process real-time,They are identical,A
+Data Science,How do data science teams collaborate effectively?,Individual work only,Clear roles documentation version control,Minimal communication,Ad-hoc processes,B
+Data Science,What is the purpose of experiment design?,Collect random data,Control variables to establish causal relationships,Build complex models,Visualize results,B
+FullStack,What is the difference between Server-Side Rendering (SSR) and Client-Side Rendering (CSR)?,SSR renders on server CSR renders in browser,Both render same place,SSR is deprecated,CSR is faster always,A
+FullStack,How does database indexing improve query performance?,Creates sorted data structures for faster lookups,Stores more data,Reduces database size,Encrypts data,A
+FullStack,What is the CAP theorem and how does it apply to distributed systems?,All three achievable,Consistency Availability Partition-tolerance choose two,Only one achievable,Theorem is outdated,B
+FullStack,How do microservices differ from monolithic architecture?,Both are identical,Microservices are independently deployable services,Monoliths are always better,Microservices are simpler,B
+FullStack,What is the purpose of load balancing in web applications?,Distribute traffic across multiple servers,Increase server load,Reduce server count,Slow down requests,A
+FullStack,How does caching improve application performance?,Slows down applications,Stores frequently accessed data for faster retrieval,Increases memory usage only,Complicates architecture,B
+FullStack,What is the difference between SQL and NoSQL databases?,Both are document-based,Both are relational,SQL relational structured NoSQL flexible schema,They are identical,C
+FullStack,How do containerization tools like Docker improve deployment?,Vendor lock-in,Slower deployments,More complex setup,Consistent environment across different systems,D
+FullStack,What is the purpose of API versioning?,Increase complexity,Confuse developers,Maintain backward compatibility during updates,Slow down development,C
+FullStack,How does OAuth 2.0 handle authentication and authorization?,Password-only authentication,Token-based access control with scopes,Basic authentication,No security mechanism,B
+FullStack,What is the difference between horizontal and vertical scaling?,Both add servers,Horizontal adds servers vertical adds resources,Both add resources,They are identical,B
+FullStack,How do content delivery networks (CDNs) improve performance?,Increase server load,Centralize all content,Slow down content delivery,Cache static content closer to users,D
+FullStack,What is the purpose of database migrations?,Version control for database schema changes,Backup databases,Delete old data,Optimize queries,A
+FullStack,How does event-driven architecture improve system design?,Synchronous only,Tight coupling required,Loose coupling through asynchronous messaging,No messaging needed,C
+FullStack,What is the difference between stateful and stateless applications?,Stateful stores session stateless doesn't,Both store sessions,Neither stores sessions,They are identical,A
+FullStack,How do message queues improve system reliability?,Eliminate error handling,Synchronous processing only,Reduce system complexity,Asynchronous processing and fault tolerance,D
+FullStack,What is the purpose of database connection pooling?,Bypass connection limits,Create more connections,Close all connections,Reuse connections to improve performance,D
+FullStack,How does GraphQL differ from REST APIs?,REST is more flexible,Multiple endpoints fixed responses,Both are identical,Single endpoint flexible queries,D
+FullStack,What is the concept of database normalization?,Simplify queries,Increase data duplication,Organize data to reduce redundancy,Improve performance only,C
+FullStack,How do web sockets enable real-time communication?,One-way communication,HTTP polling only,Persistent bidirectional connection,Batch processing,C
+FullStack,What is the purpose of database transactions?,Simplify operations,Speed up queries,Reduce database size,Ensure data consistency through ACID properties,D
+FullStack,How does service mesh improve microservices communication?,Infrastructure layer for service-to-service communication,Application-level solution,Database connectivity,Frontend framework,A
+FullStack,What is the difference between blocking and non-blocking I/O?,Blocking waits non-blocking continues execution,Both wait for completion,Both continue immediately,They are identical,A
+FullStack,How do design patterns improve software architecture?,Reusable solutions to common problems,Increase code complexity,Slow down development,Limit creativity,A
+FullStack,What is the purpose of database sharding?,Distribute data across multiple databases,Combine all data,Encrypt database,Backup data,A
+FullStack,How does dependency injection improve code maintainability?,Tight coupling required,Loose coupling through external dependency provision,Hard-coded dependencies better,No dependencies needed,B
+FullStack,What is the difference between authentication and authorization?,Both verify identity,Authentication verifies identity authorization grants access,Both grant access,They are identical,B
+FullStack,How do circuit breakers improve system resilience?,Increase system load,Prevent cascading failures through failure detection,Eliminate error handling,Slow down responses,B
+FullStack,What is the purpose of database replication?,Data availability and read performance,Single point of failure,Reduce data consistency,Complicate operations,A
+FullStack,How does continuous integration improve software development?,Manual testing only,Automated testing and early error detection,Delayed integration,Reduced code quality,B
+FullStack,What is the difference between synchronous and asynchronous processing?,Both process immediately,Both wait for completion,Synchronous waits asynchronous doesn't block,They are identical,C
+FullStack,How do health checks improve system monitoring?,Manual monitoring only,Automated service availability verification,Increase system load,Complicate deployment,B
+FullStack,What is the purpose of rate limiting in APIs?,Slow down all requests,Unlimited access,Prevent abuse and ensure fair usage,Complicate implementation,C
+FullStack,How does database indexing affect write performance?,Indexes slow writes but speed reads,Always improve performance,No impact on writes,Only affect reads,A
+FullStack,What is the difference between optimistic and pessimistic locking?,They are identical,Both assume conflicts,Both avoid locking,Optimistic assumes no conflicts pessimistic locks immediately,D
+FullStack,How do blue-green deployments minimize downtime?,Manual deployment process,Single environment deployment,Two identical environments with traffic switching,No deployment strategy,C
+FullStack,What is the purpose of database denormalization?,Increase data integrity,Always reduce performance,Trade storage for query performance,Simplify schema design,C
+FullStack,How does content compression improve web performance?,Increases bandwidth usage,Reduces data transfer size,Slows down processing,Complicates implementation,B
+FullStack,What is the difference between ACID and BASE properties?,ACID consistency BASE eventual consistency,Both guarantee consistency,Both allow inconsistency,They are identical,A
+FullStack,How do database views improve data access?,Virtual tables with predefined queries,Physical data storage,Increase storage requirements,Complicate queries,A
+FullStack,What is the purpose of error handling in distributed systems?,Graceful degradation and fault tolerance,Ignore all errors,Crash on errors,Log errors only,A
+FullStack,How does database partitioning improve performance?,Reduce data availability,Combine small tables,Increase query complexity,Divide large tables for parallel processing,D
+FullStack,What is the difference between eager and lazy loading?,Eager loads immediately lazy loads on demand,Both load immediately,Both load on demand,They are identical,A
+FullStack,How do monitoring and observability improve system operations?,Slow down applications,Increase system complexity,Visibility into system behavior and performance,Complicate deployment,C
+FullStack,What is the purpose of database backup and recovery?,Complicate maintenance,Waste storage space,Slow down operations,Data protection and business continuity,D
+FullStack,How does API gateway improve microservices architecture?,Complicate routing,Centralized entry point with cross-cutting concerns,Increase latency,Single point of failure,B
+FullStack,What is the difference between unit and integration testing?,Unit tests components integration tests interactions,Both test components,Both test interactions,They are identical,A
+FullStack,How does database connection optimization improve performance?,Efficient connection management and pooling,Create more connections,Avoid connection reuse,Increase connection overhead,A
+FullStack,What is the purpose of feature flags in software deployment?,Increase technical debt,Complicate code logic,Slow down development,Control feature rollout without code changes,D
+FullStack,How does log aggregation improve system debugging?,Manual log analysis,Scattered log files,Centralized searchable log collection,Ignore logging,C
+FullStack,What is the difference between push and pull deployment strategies?,They are identical,Both send updates,Both retrieve updates,Push sends updates pull retrieves updates,D

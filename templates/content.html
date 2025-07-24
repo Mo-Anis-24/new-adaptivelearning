@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Content Library - Adaptive Learning Platform{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i data-feather="book"></i>
+                Content Library
+            </h2>
+            
+            <!-- Filter Buttons -->
+            <div class="btn-group" role="group">
+                <a href="{{ url_for('content', difficulty='all') }}" class="btn btn-{{ 'primary' if current_filter == 'all' else 'outline-primary' }}">
+                    All
+                </a>
+                <a href="{{ url_for('content', difficulty='beginner') }}" class="btn btn-{{ 'success' if current_filter == 'beginner' else 'outline-success' }}">
+                    Beginner
+                </a>
+                <a href="{{ url_for('content', difficulty='intermediate') }}" class="btn btn-{{ 'warning' if current_filter == 'intermediate' else 'outline-warning' }}">
+                    Intermediate
+                </a>
+                <a href="{{ url_for('content', difficulty='advanced') }}" class="btn btn-{{ 'danger' if current_filter == 'advanced' else 'outline-danger' }}">
+                    Advanced
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% for content in content_list %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">{{ content.title }}</h6>
+                    <div>
+                        <span class="badge bg-{{ 'success' if content.difficulty_level == 'beginner' else 'warning' if content.difficulty_level == 'intermediate' else 'danger' }}">
+                            {{ content.difficulty_level.title() }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ content.description }}</p>
+                
+                <div class="mb-3">
+                    <small class="text-muted">
+                        <i data-feather="tag"></i>
+                        Subject: {{ content.subject }}
+                    </small>
+                </div>
+                
+                <div class="mb-3">
+                    <small class="text-muted">
+                        <i data-feather="file-text"></i>
+                        Type: {{ content.content_type.title() }}
+                    </small>
+                </div>
+                
+                {% if content.tags %}
+                <div class="mb-3">
+                    {% for tag in content.tags|from_json %}
+                    <span class="badge bg-secondary me-1">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        <i data-feather="calendar"></i>
+                        {{ content.created_at.strftime('%Y-%m-%d') }}
+                    </small>
+                    <a href="{{ url_for('view_content', content_id=content.id) }}" class="btn btn-primary btn-sm">
+                        <i data-feather="eye"></i>
+                        View Content
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not content_list %}
+<div class="text-center py-5">
+    <i data-feather="search" class="text-muted mb-3" style="width: 64px; height: 64px;"></i>
+    <h4 class="text-muted">No content found</h4>
+    <p class="text-muted">Try adjusting your filters or check back later for new content.</p>
+</div>
+{% endif %}
+{% endblock %}

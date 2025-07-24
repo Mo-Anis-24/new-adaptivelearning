@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Quiz Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --primary-dark: #564fd8;
+            --secondary: #ff6584;
+            --accent: #42e2b8;
+            --dark: #121826;
+            --darker: #0d1117;
+            --light: #f0f2f5;
+            --gray: #2d3748;
+            --success: #42e2b8;
+            --warning: #ffc145;
+            --danger: #ff6584;
+            --card-bg: #1a202c;
+            --card-border: #2d3748;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--darker), #1a202c);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(26, 32, 44, 0.8);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .quiz-info {
+            text-align: right;
+        }
+
+        .quiz-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quiz-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .timer-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timer-btn:hover {
+            background: var(--primary);
+        }
+
+        .progress-section {
+            margin-bottom: 30px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+
+        .progress-container {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .quiz-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-percent {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .quiz-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+        }
+
+        .questions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--card-border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .card.answered {
+            border-left-color: var(--success);
+        }
+
+        .card.marked {
+            border-left-color: var(--warning);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .q-badge {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option.selected {
+            background: rgba(108, 99, 255, 0.15);
+            border: 1px solid var(--primary);
+        }
+
+        .option.selected .option-indicator {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-indicator {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mark-btn {
+            background: rgba(255, 193, 69, 0.1);
+            color: var(--warning);
+        }
+
+        .mark-btn:hover {
+            background: rgba(255, 193, 69, 0.2);
+        }
+
+        .hint-btn {
+            background: rgba(66, 226, 184, 0.1);
+            color: var(--accent);
+        }
+
+        .hint-btn:hover {
+            background: rgba(66, 226, 184, 0.2);
+        }
+
+        .quiz-hint {
+            background: rgba(66, 226, 184, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-hint.show {
+            display: block;
+        }
+
+        .quiz-sidebar {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            height: fit-content;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .q-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .q-item:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .q-item.current {
+            background: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3);
+        }
+
+        .q-item.answered::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            width: 20px;
+            height: 3px;
+            background: var(--success);
+            border-radius: 2px;
+        }
+
+        .q-item.marked::after {
+            content: '!';
+            position: absolute;
+            top: 2px;
+            right: 5px;
+            color: var(--warning);
+            font-weight: 800;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .current-color {
+            background: var(--primary);
+        }
+
+        .answered-color {
+            background: var(--success);
+        }
+
+        .marked-color {
+            background: var(--warning);
+        }
+
+        .submit-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border: none;
+            padding: 15px 35px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.4);
+        }
+
+        .keyboard-hints {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .keyboard-title {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .keyboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .key-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .key {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-weight: 600;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .key-desc {
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border-left: 4px solid var(--warning);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateX(120%);
+            transition: transform 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+            color: var(--warning);
+        }
+
+        @media (max-width: 900px) {
+            .quiz-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .quiz-info {
+                text-align: center;
+            }
+            
+            .quiz-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>QuizMaster Pro</span>
+            </div>
+            <div class="quiz-info">
+                <h1 class="quiz-title">Advanced JavaScript Concepts</h1>
+                <div class="quiz-meta">
+                    <div class="questions-count"><i class="fas fa-list-ol"></i> {{ quiz_data.questions|length }} Questions</div>
+                    <div class="timer-container">
+                        <div class="timer">20:00</div>
+                        <div class="timer-controls">
+                            <button class="timer-btn" id="pauseBtn"><i class="fas fa-pause"></i></button>
+                            <button class="timer-btn" id="resetBtn"><i class="fas fa-redo"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="progress-section">
+            <div class="progress-header">
+                <div>Progress: <span id="answeredCount">0</span>/<span id="totalQuestions">{{ quiz_data.questions|length }}</span> answered</div>
+                <div>Time per question: <span id="timePerQuestion">2:00</span></div>
+            </div>
+            <div class="progress-container">
+                <div class="quiz-progress" style="width: 0%"></div>
+                <div class="progress-percent">0%</div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_quiz') }}" id="quizForm">
+            <div class="quiz-content">
+                <div class="questions-container" id="questionsContainer">
+                    <!-- Questions will be dynamically inserted here -->
+                </div>
+            
+            <div class="quiz-sidebar">
+                <h2 class="sidebar-title"><i class="fas fa-map"></i> Questions Navigator</h2>
+                <div class="questions-grid" id="questionsGrid">
+                    <!-- Question navigation items will be inserted here -->
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color current-color"></div>
+                        <span>Current</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color answered-color"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color marked-color"></div>
+                        <span>Marked</span>
+                    </div>
+                </div>
+                
+                <div class="keyboard-hints">
+                    <h3 class="keyboard-title"><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h3>
+                    <div class="keyboard-grid">
+                        <div class="key-item">
+                            <div class="key">1-4</div>
+                            <div class="key-desc">Select answer</div>
+                        </div>
+                        <div class="key-item">
+                            <div class="key">M</div>
+                            <div class="key-desc">Mark question</div>
+                        </div>
+                        <div class="key-item">
+                            <div class="key">H</div>
+                            <div class="key-desc">Show hint</div>
+                        </div>
+                        <div class="key-item">
+                            <div class="key">Ctrl+Enter</div>
+                            <div class="key-desc">Submit quiz</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            </div>
+        </div>
+
+        <div class="submit-section">
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> Submit Quiz
+            </button>
+        </div>
+        </form>
+    </div>
+
+    <div class="notification" id="notification">
+        <div class="notification-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <div class="notification-text">Please answer all questions before submitting!</div>
+    </div>
+
+    <script>
+        // Quiz data from Flask
+        const quizData = {{ quiz_data.questions|tojson|safe }};
+
+        // Initialize the quiz
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+            setupEventListeners();
+            startTimer();
+            updateProgress();
+        });
+
+        // Render quiz questions
+        function renderQuiz() {
+            const container = document.getElementById('questionsContainer');
+            const grid = document.getElementById('questionsGrid');
+            
+            quizData.forEach((q, index) => {
+                // Create question card
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.index = index;
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="question-number">
+                            <div class="q-badge">${index + 1}</div>
+                            <div class="question-text">${q.question_text}</div>
+                        </div>
+                        <div class="question-status">
+                            ${index === 0 ? '<span class="current-badge"><i class="fas fa-location-arrow"></i> Current</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="options">
+                        ${q.options.map((opt, optIndex) => `
+                            <div class="option" data-option="${optIndex}">
+                                <div class="option-indicator">${String.fromCharCode(65 + optIndex)}</div>
+                                <div class="option-text">${opt}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-hint">
+                        <i class="fas fa-lightbulb"></i> Hint: This is a ${q.difficulty_level} level question about ${q.subject}.
+                    </div>
+                    <div class="card-actions">
+                        <button class="action-btn mark-btn">
+                            <i class="fas fa-flag"></i> Mark for Review
+                        </button>
+                        <button class="action-btn hint-btn">
+                            <i class="fas fa-lightbulb"></i> Show Hint
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+                
+                // Create navigation item
+                const qItem = document.createElement('div');
+                qItem.className = 'q-item';
+                qItem.textContent = index + 1;
+                qItem.dataset.index = index;
+                if (index === 0) qItem.classList.add('current');
+                grid.appendChild(qItem);
+            });
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Option selection
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const card = this.closest('.card');
+                    const questionIndex = card.dataset.index;
+                    const optionIndex = this.dataset.option;
+                    
+                    card.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    card.classList.add('answered');
+                    
+                    // Create or update hidden input for form submission
+                    let input = document.querySelector(`input[name="question_${questionIndex}"]`);
+                    if (!input) {
+                        input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = `question_${questionIndex}`;
+                        document.getElementById('quizForm').appendChild(input);
+                    }
+                    input.value = String.fromCharCode(65 + parseInt(optionIndex));
+                    
+                    // Update progress
+                    updateProgress();
+                });
+            });
+            
+            // Mark for review
+            document.querySelectorAll('.mark-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.card');
+                    card.classList.toggle('marked');
+                    
+                    // Update question grid
+                    const index = card.dataset.index;
+                    const qItem = document.querySelector(`.q-item[data-index="${index}"]`);
+                    qItem.classList.toggle('marked');
+                    
+                    // Change button text
+                    const icon = this.querySelector('i');
+                    const text = this.querySelector('span') || this.childNodes[2];
+                    
+                    if (card.classList.contains('marked')) {
+                        icon.className = 'fas fa-flag-checkered';
+                        if (text.nodeValue) text.nodeValue = ' Unmark';
+                    } else {
+                        icon.className = 'fas fa-flag';
+                        if (text.nodeValue) text.nodeValue = ' Mark for Review';
+                    }
+                });
+            });
+            
+            // Show hint
+            document.querySelectorAll('.hint-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const hint = this.closest('.card').querySelector('.quiz-hint');
+                    hint.classList.toggle('show');
+                });
+            });
+            
+            // Question navigation
+            document.querySelectorAll('.q-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const index = this.dataset.index;
+                    const card = document.querySelector(`.card[data-index="${index}"]`);
+                    
+                    // Scroll to question
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Update current question
+                    document.querySelectorAll('.card').forEach(c => {
+                        c.querySelector('.current-badge')?.remove();
+                    });
+                    document.querySelectorAll('.q-item').forEach(i => {
+                        i.classList.remove('current');
+                    });
+                    
+                    this.classList.add('current');
+                    card.querySelector('.card-header .question-status').innerHTML = '<span class="current-badge"><i class="fas fa-location-arrow"></i> Current</span>';
+                });
+            });
+            
+            // Timer controls
+            document.getElementById('pauseBtn').addEventListener('click', toggleTimer);
+            document.getElementById('resetBtn').addEventListener('click', resetTimer);
+            
+            // Submit button
+            document.getElementById('submitBtn').addEventListener('click', function(e) {
+                const answered = document.querySelectorAll('.card.answered').length;
+                const total = quizData.length;
+                
+                if (answered < total) {
+                    e.preventDefault();
+                    showNotification(`Please answer all ${total} questions before submitting!`);
+                }
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleKeyboardShortcuts);
+        }
+
+        // Timer functionality
+        let quizTimer;
+        let startTime = Date.now();
+        let timeLeft = 20 * 60; // 20 minutes
+        let timerRunning = true;
+
+        function startTimer() {
+            quizTimer = setInterval(() => {
+                if (timerRunning) {
+                    timeLeft--;
+                    
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    
+                    document.querySelector('.timer').textContent = 
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    // Update time per question
+                    const answered = document.querySelectorAll('.card.answered').length;
+                    const remaining = quizData.length - answered;
+                    const timePerQuestion = remaining > 0 ? Math.floor(timeLeft / remaining) : 0;
+                    
+                    const minPerQ = Math.floor(timePerQuestion / 60);
+                    const secPerQ = timePerQuestion % 60;
+                    document.getElementById('timePerQuestion').textContent = 
+                        `${minPerQ.toString().padStart(2, '0')}:${secPerQ.toString().padStart(2, '0')}`;
+                    
+                    // Color changes based on time
+                    if (timeLeft < 300) { // Less than 5 minutes
+                        document.querySelector('.timer').style.background = 'linear-gradient(90deg, var(--warning), var(--danger))';
+                        document.querySelector('.timer').style.webkitBackgroundClip = 'text';
+                        document.querySelector('.timer').style.webkitTextFillColor = 'transparent';
+                    }
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(quizTimer);
+                        document.querySelector('.timer').textContent = "00:00";
+                        showNotification("Time's up! Quiz will be submitted automatically.");
+                        setTimeout(() => {
+                            // Submit the quiz
+                        }, 3000);
+                    }
+                }
+            }, 1000);
+        }
+
+        function toggleTimer() {
+            timerRunning = !timerRunning;
+            const icon = document.querySelector('#pauseBtn i');
+            icon.className = timerRunning ? 'fas fa-pause' : 'fas fa-play';
+        }
+
+        function resetTimer() {
+            timeLeft = 20 * 60;
+            timerRunning = true;
+            document.querySelector('#pauseBtn i').className = 'fas fa-pause';
+            
+            // Reset timer display
+            document.querySelector('.timer').textContent = "20:00";
+            document.querySelector('.timer').style.background = 'linear-gradient(90deg, var(--accent), var(--success))';
+        }
+
+        // Update progress bar and count
+        function updateProgress() {
+            const answered = document.querySelectorAll('.card.answered').length;
+            const total = quizData.length;
+            const percent = Math.round((answered / total) * 100);
+            
+            document.querySelector('.quiz-progress').style.width = `${percent}%`;
+            document.querySelector('.progress-percent').textContent = `${percent}%`;
+            document.getElementById('answeredCount').textContent = answered;
+        }
+
+        // Show notification
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Handle keyboard shortcuts
+        function handleKeyboardShortcuts(e) {
+            // Option selection (1-4)
+            if (e.key >= '1' && e.key <= '4') {
+                const currentCard = document.querySelector('.card .current-badge')?.closest('.card');
+                if (currentCard) {
+                    const option = currentCard.querySelector(`.option:nth-child(${e.key})`);
+                    if (option) {
+                        option.click();
+                    }
+                }
+            }
+            
+            // Mark for review (M)
+            if (e.key === 'm' || e.key === 'M') {
+                const currentCard = document.querySelector('.card .current-badge')?.closest('.card');
+                if (currentCard) {
+                    currentCard.querySelector('.mark-btn').click();
+                }
+            }
+            
+            // Show hint (H)
+            if (e.key === 'h' || e.key === 'H') {
+                const currentCard = document.querySelector('.card .current-badge')?.closest('.card');
+                if (currentCard) {
+                    currentCard.querySelector('.hint-btn').click();
+                }
+            }
+            
+            // Submit (Ctrl+Enter)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                document.getElementById('submitBtn').click();
+            }
+        }
+    </script>
+</body>
+</html>

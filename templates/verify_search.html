@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Certificate Verification - Broader AI{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i data-feather="search"></i> Verify Certificate</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="mb-4">
+                        <div class="mb-3">
+                            <label for="series_id" class="form-label">Enter Series ID</label>
+                            <input type="text" class="form-control" id="series_id" name="series_id" placeholder="e.g. 1234567890" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Verify</button>
+                    </form>
+                    {% if error %}
+                        <div class="alert alert-danger mt-3">{{ error }}</div>
+                    {% elif cert_data %}
+                        <div class="alert alert-success mt-4">
+                            <h5 class="mb-3">Certificate Details</h5>
+                            <table class="table table-bordered">
+                                <tr><th>Series ID</th><td>{{ cert_data.series_id }}</td></tr>
+                                <tr><th>Name</th><td>{{ cert_data.user_name }}</td></tr>
+                                <tr><th>Subject</th><td>{{ cert_data.subject }}</td></tr>
+                                <tr><th>Issue Date</th><td>{{ cert_data.issue_date }}</td></tr>
+                                <tr><th>Expiry Date</th><td>{{ cert_data.expiry_date }}</td></tr>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

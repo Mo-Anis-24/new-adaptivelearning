@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Results - Adaptive Learning Platform{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Overall Results -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i data-feather="award"></i>
+                    Quiz Results
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="card bg-{{ 'success' if results.score >= 70 else 'warning' if results.score >= 50 else 'danger' }}">
+                            <div class="card-body">
+                                <h3 class="text-white">{{ "%.1f"|format(results.score) }}%</h3>
+                                <p class="text-white mb-0">Final Score</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card bg-info">
+                            <div class="card-body">
+                                <h3 class="text-white">{{ results.correct_answers }}/{{ results.total_questions }}</h3>
+                                <p class="text-white mb-0">Correct</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card bg-secondary">
+                            <div class="card-body">
+                                <h3 class="text-white">{{ results.time_spent }}s</h3>
+                                <p class="text-white mb-0">Time Spent</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card bg-dark">
+                            <div class="card-body">
+                                <h3 class="text-white">{{ results.difficulty_level.title() }}</h3>
+                                <p class="text-white mb-0">Difficulty</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Predictions vs Actual -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="trending-up"></i>
+                    Model Predictions vs Actual Performance
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="predictionComparisonChart"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Predicted</th>
+                                        <th>Actual</th>
+                                        <th>Accuracy</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for model, predicted_score in results.predictions.items() %}
+                                    <tr>
+                                        <td>
+                                            {% if model == 'random_forest' %}
+                                                Random Forest
+                                            {% elif model == 'xgboost' %}
+                                                XGBoost
+                                            {% elif model == 'neural_network' %}
+                                                Neural Network
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ "%.1f"|format(predicted_score) }}%</td>
+                                        <td>{{ "%.1f"|format(results.score) }}%</td>
+                                        <td>
+                                            {% set accuracy = 100 - (predicted_score - results.score)|abs %}
+                                            <span class="badge bg-{{ 'success' if accuracy >= 90 else 'warning' if accuracy >= 75 else 'danger' }}">
+                                                {{ "%.1f"|format(accuracy) }}%
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Updated Predictions for Next Quiz -->
+        {% if results.next_predictions %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="zap"></i>
+                    Predicted Marks for Your Next Quiz
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Based on your performance, here are the predicted marks for your next quiz:</p>
+                <div class="row">
+                    {% for model, score in results.next_predictions.items() %}
+                    <div class="col-md-4">
+                        <div class="card border-primary">
+                            <div class="card-body text-center">
+                                <h5>
+                                    {% if model == 'random_forest' %}
+                                        Random Forest
+                                    {% elif model == 'xgboost' %}
+                                        XGBoost
+                                    {% elif model == 'neural_network' %}
+                                        Neural Network
+                                    {% endif %}
+                                </h5>
+                                <h3 class="text-primary">{{ "%.1f"|format(score) }}%</h3>
+                                <p class="text-muted mb-0">Next Quiz Prediction</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Performance Feedback -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="message-square"></i>
+                    Performance Feedback
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if results.score >= 80 %}
+                <div class="alert alert-success">
+                    <h6 class="alert-heading">Excellent Work!</h6>
+                    <p>You scored {{ "%.1f"|format(results.score) }}% - that's outstanding! You're ready for more challenging content.</p>
+                    <p class="mb-0">
+                        <strong>Recommendation:</strong> Try advanced-level content to continue challenging yourself.
+                    </p>
+                </div>
+                {% elif results.score >= 60 %}
+                <div class="alert alert-warning">
+                    <h6 class="alert-heading">Good Progress!</h6>
+                    <p>You scored {{ "%.1f"|format(results.score) }}% - you're doing well and making good progress.</p>
+                    <p class="mb-0">
+                        <strong>Recommendation:</strong> Continue with similar difficulty level or try slightly more challenging content.
+                    </p>
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <h6 class="alert-heading">Keep Learning!</h6>
+                    <p>You scored {{ "%.1f"|format(results.score) }}% - there's room for improvement, but that's part of the learning process.</p>
+                    <p class="mb-0">
+                        <strong>Recommendation:</strong> Review the content again and try some easier questions to build confidence.
+                    </p>
+                </div>
+                {% endif %}
+
+                {# Download Certificate Button: Only if score >= 70 #}
+                {% if results.score >= 70 %}
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('download_certificate', subject=results.subject, score=results.score) }}" class="btn btn-success btn-lg" target="_blank">
+                        <i data-feather="download"></i> Download Certificate
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Question Review -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="list"></i>
+                    Question Review
+                </h5>
+            </div>
+            <div class="card-body">
+                {% for question in results.questions_review %}
+                <div class="card mb-3 border-{{ 'success' if question.is_correct else 'danger' }}">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">Question {{ loop.index }}</h6>
+                            <div>
+                                <span class="badge bg-info">{{ question.subject }}</span>
+                                {% if question.is_correct %}
+                                <span class="badge bg-success">
+                                    <i data-feather="check"></i>
+                                    Correct
+                                </span>
+                                {% else %}
+                                <span class="badge bg-danger">
+                                    <i data-feather="x"></i>
+                                    Incorrect
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ question.question_text }}</p>
+                        
+                        <div class="row">
+                            {% for option_letter, option_text in [('A', question.options[0]), ('B', question.options[1]), ('C', question.options[2]), ('D', question.options[3])] %}
+                            <div class="col-md-6 mb-2">
+                                <div class="p-2 rounded
+                                    {% if option_letter == question.correct_answer %}
+                                        bg-success bg-opacity-25
+                                    {% elif option_letter == question.user_answer and not question.is_correct %}
+                                        bg-danger bg-opacity-25
+                                    {% endif %}
+                                ">
+                                    <strong>{{ option_letter }}.</strong> {{ option_text }}
+                                    {% if option_letter == question.correct_answer %}
+                                        <i data-feather="check" class="text-success"></i>
+                                    {% elif option_letter == question.user_answer and not question.is_correct %}
+                                        <i data-feather="x" class="text-danger"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        {% if not question.is_correct %}
+                        <div class="mt-2">
+                            <small class="text-muted">
+                                <strong>Your answer:</strong> {{ question.user_answer or 'Not answered' }} | 
+                                <strong>Correct answer:</strong> {{ question.correct_answer }}
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="text-center">
+            <a href="{{ url_for('quiz') }}" class="btn btn-primary me-2">
+                <i data-feather="refresh-cw"></i>
+                Take Another Quiz
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                <i data-feather="home"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Create prediction comparison chart
+    const ctx = document.getElementById('predictionComparisonChart').getContext('2d');
+    const predictions = {{ results.predictions|tojson }};
+    const actualScore = {{ results.score }};
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Random Forest', 'XGBoost', 'Neural Network', 'Actual'],
+            datasets: [{
+                label: 'Score %',
+                data: [
+                    predictions.random_forest || 0,
+                    predictions.xgboost || 0,
+                    predictions.neural_network || 0,
+                    actualScore
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Predictions vs Actual Performance'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

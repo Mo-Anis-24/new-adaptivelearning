@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Start Quiz - Select Subject{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4>Select a Subject to Start Your Quiz</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <select class="form-select" id="subject" name="subject" required>
+                            <option value="" disabled selected>Select a subject</option>
+                            {% for subject in subjects %}
+                                <option value="{{ subject }}">{{ subject }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Start Quiz</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

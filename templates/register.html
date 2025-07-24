@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Adaptive Learning Platform{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i data-feather="user-plus"></i>
+                    Create Your Account
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone" name="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="college" class="form-label">College</label>
+                        <input type="text" class="form-control" id="college" name="college" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" name="age" min="10" max="100" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="learning_style" class="form-label">Learning Style</label>
+                        <select class="form-select" id="learning_style" name="learning_style">
+                            <option value="visual">Visual</option>
+                            <option value="auditory">Auditory</option>
+                            <option value="kinesthetic">Kinesthetic</option>
+                            <option value="reading">Reading/Writing</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="skill_level" class="form-label">Current Skill Level</label>
+                        <select class="form-select" id="skill_level" name="skill_level">
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i data-feather="check"></i>
+                            Create Account
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <p class="text-muted">
+                        Already have an account? 
+                        <a href="{{ url_for('login') }}">Sign in here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

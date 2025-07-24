@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Adaptive Learning Platform{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i data-feather="home"></i>
+                Welcome back, {{ current_user.username }}!
+            </h2>
+            <a href="{{ url_for('start_quiz') }}" class="btn btn-primary">
+                <i data-feather="play"></i>
+                Take Quiz
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-end mb-3">
+    <!-- Verify Certificate button removed -->
+</div>
+
+<!-- ML Predictions Comparison -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="trending-up"></i>
+                    ML Model Predictions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="predictionsChart"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            {% for model, score in predictions.items() %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">
+                                            {% if model == 'random_forest' %}
+                                                Random Forest
+                                            {% elif model == 'xgboost' %}
+                                                XGBoost
+                                            {% elif model == 'neural_network' %}
+                                                Neural Network
+                                            {% endif %}
+                                        </h6>
+                                        <h3 class="text-primary">{{ "%.1f"|format(score) }}%</h3>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar" role="progressbar" style="width: {{ score }}%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Statistics -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i data-feather="award" class="text-warning mb-2" style="width: 32px; height: 32px;"></i>
+                <h5>{{ "%.1f"|format(quiz_stats.average_score) }}%</h5>
+                <p class="text-muted mb-0">Average Score</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i data-feather="target" class="text-success mb-2" style="width: 32px; height: 32px;"></i>
+                <h5>{{ "%.1f"|format(quiz_stats.best_score) }}%</h5>
+                <p class="text-muted mb-0">Best Score</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i data-feather="repeat" class="text-info mb-2" style="width: 32px; height: 32px;"></i>
+                <h5>{{ quiz_stats.total_attempts }}</h5>
+                <p class="text-muted mb-0">Total Attempts</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i data-feather="user" class="text-primary mb-2" style="width: 32px; height: 32px;"></i>
+                <h5>{{ current_user.learning_style.title() }}</h5>
+                <p class="text-muted mb-0">Learning Style</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Progress Chart -->
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="bar-chart-2"></i>
+                    Performance Progress
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="progressChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="pie-chart"></i>
+                    Difficulty Breakdown
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="difficultyChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recommended Content -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="book"></i>
+                    Recommended Content
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for content in recommended_content %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ content.title }}</h6>
+                                <p class="card-text">{{ content.description[:100] }}...</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <span class="badge bg-secondary">{{ content.difficulty_level.title() }}</span>
+                                        <span class="badge bg-info">{{ content.subject }}</span>
+                                    </small>
+                                    <a href="{{ url_for('view_content', content_id=content.id) }}" class="btn btn-sm btn-outline-primary">
+                                        <i data-feather="eye"></i>
+                                        View
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Quiz Attempts -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i data-feather="clock"></i>
+                    Recent Quiz Attempts
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if recent_attempts %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Score</th>
+                                <th>Difficulty</th>
+                                <th>Time Spent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attempt in recent_attempts %}
+                            <tr>
+                                <td>{{ attempt.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 'success' if attempt.score >= 70 else 'warning' if attempt.score >= 50 else 'danger' }}">
+                                        {{ "%.1f"|format(attempt.score) }}%
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ attempt.difficulty_level.title() }}</span>
+                                </td>
+                                <td>{{ attempt.time_spent }}s</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i data-feather="book-open" class="text-muted mb-3" style="width: 48px; height: 48px;"></i>
+                    <p class="text-muted">No quiz attempts yet. <a href="{{ url_for('quiz') }}">Take your first quiz!</a></p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script>
+    // Initialize dashboard with data
+    const dashboardData = {
+        predictions: {{ predictions|tojson }},
+        quizStats: {{ quiz_stats|tojson }},
+        recentScores: {{ quiz_stats.recent_scores|tojson }}
+    };
+    
+    initializeDashboard(dashboardData);
+</script>
+{% endblock %}
