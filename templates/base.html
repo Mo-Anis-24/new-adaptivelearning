@@ -1,134 +1,631 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Adaptive Learning Platform{% endblock %}</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Feather Icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
-    {% block head %}{% endblock %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}BroderAI Learning Platform{% endblock %}</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Advanced Design with Background Effects */
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #64748b;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --light-bg: #f8fafc;
+      --white: #ffffff;
+      --border-color: #e2e8f0;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    }
+
+    /* Advanced Background Effects */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--light-bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* 3D Animated Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -3;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes backgroundShift {
+      0% {
+        background: 
+          radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+      }
+      100% {
+        background: 
+          radial-gradient(circle at 80% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 20% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 60% 60%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+      }
+    }
+
+    /* 3D Floating Elements */
+    .bg-3d-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-3d-element {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(120, 119, 198, 0.6), rgba(255, 119, 198, 0.6));
+      box-shadow: 
+        0 0 20px rgba(120, 119, 198, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+      animation: float3D 8s ease-in-out infinite;
+    }
+
+    .bg-3d-element:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .bg-3d-element:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      left: 80%;
+      animation-delay: -2s;
+      background: linear-gradient(45deg, rgba(255, 119, 198, 0.6), rgba(120, 219, 255, 0.6));
+    }
+
+    .bg-3d-element:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      top: 40%;
+      left: 70%;
+      animation-delay: -4s;
+      background: linear-gradient(45deg, rgba(120, 219, 255, 0.6), rgba(120, 119, 198, 0.6));
+    }
+
+    .bg-3d-element:nth-child(4) {
+      width: 100px;
+      height: 100px;
+      top: 80%;
+      left: 20%;
+      animation-delay: -6s;
+      background: linear-gradient(45deg, rgba(255, 119, 198, 0.6), rgba(120, 219, 255, 0.6));
+    }
+
+    .bg-3d-element:nth-child(5) {
+      width: 40px;
+      height: 40px;
+      top: 10%;
+      left: 60%;
+      animation-delay: -1s;
+    }
+
+    .bg-3d-element:nth-child(6) {
+      width: 90px;
+      height: 90px;
+      top: 70%;
+      left: 40%;
+      animation-delay: -3s;
+      background: linear-gradient(45deg, rgba(120, 219, 255, 0.6), rgba(255, 119, 198, 0.6));
+    }
+
+    @keyframes float3D {
+      0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+        opacity: 0.7;
+      }
+      25% {
+        transform: translateY(-20px) translateX(10px) rotate(90deg) scale(1.1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateY(-10px) translateX(-15px) rotate(180deg) scale(0.9);
+        opacity: 0.8;
+      }
+      75% {
+        transform: translateY(15px) translateX(5px) rotate(270deg) scale(1.05);
+        opacity: 0.6;
+      }
+    }
+
+    /* 3D Grid Lines */
+    .bg-3d-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: 
+        linear-gradient(rgba(120, 119, 198, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120, 119, 198, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 30s linear infinite;
+      transform: perspective(1000px) rotateX(60deg);
+    }
+
+    @keyframes gridMove {
+      0% {
+        transform: perspective(1000px) rotateX(60deg) translateY(0px);
+      }
+      100% {
+        transform: perspective(1000px) rotateX(60deg) translateY(50px);
+      }
+    }
+
+    /* 3D Light Rays */
+    .bg-3d-rays {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: 
+        conic-gradient(from 0deg at 20% 30%, transparent 0deg, rgba(120, 119, 198, 0.1) 60deg, transparent 120deg),
+        conic-gradient(from 180deg at 80% 70%, transparent 0deg, rgba(255, 119, 198, 0.1) 60deg, transparent 120deg);
+      animation: raysRotate 25s linear infinite;
+    }
+
+    @keyframes raysRotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Advanced Navigation */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1rem 0;
+      position: relative;
+      z-index: 1000;
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      color: var(--primary-color) !important;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Simple Logo Container */
+    .logo-container {
+      position: relative;
+      padding: 0.5rem;
+    }
+
+    .logo-container img {
+      height: 40px;
+      width: auto;
+      border-radius: 6px;
+    }
+
+    .nav-link {
+      color: var(--text-secondary) !important;
+      font-weight: 500;
+      padding: 0.5rem 1rem !important;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link:hover {
+      background-color: var(--primary-color);
+      color: white !important;
+    }
+
+    /* Ultra-Simplified Buttons - No Extra Effects */
+    .btn {
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      border: none;
+      min-width: 120px;
+      height: 45px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      color: white;
+    }
+
+    .btn-outline-primary {
+      background: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--secondary-color);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+      color: white;
+    }
+
+    .btn-success {
+      background: var(--success-color);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #059669;
+      color: white;
+    }
+
+    .btn-warning {
+      background: var(--warning-color);
+      color: white;
+    }
+
+    .btn-warning:hover {
+      background: #d97706;
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger-color);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+      color: white;
+    }
+
+    /* Override Bootstrap size classes to maintain consistency */
+    .btn-lg, .btn-sm {
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      border: none;
+      min-width: 120px;
+      height: 45px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    /* Advanced Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(10px);
+    }
+
+    .card-header {
+      background: rgba(255, 255, 255, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Advanced Alerts */
+    .alert {
+      border: none;
+      border-radius: 12px;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95) !important;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Advanced Footer */
+    .footer {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      margin-top: 4rem;
+      padding: 2rem 0;
+      position: relative;
+    }
+
+    /* Typography */
+    .display-4 {
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lead {
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+    }
+
+    /* Code Styling */
+    .code-block {
+      background: rgba(30, 41, 59, 0.95);
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      border: 1px solid rgba(120, 119, 198, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar-brand {
+        font-size: 1.1rem;
+      }
+      
+      .logo-container {
+        padding: 0.25rem;
+      }
+      
+      .logo-container img {
+        height: 32px;
+      }
+    }
+  </style>
+
+  {% block head %}{% endblock %}
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">
-                <i data-feather="brain"></i>
-                Adaptive Learning
+
+  <!-- 3D Background Elements -->
+  <div class="bg-3d-container">
+    <div class="bg-3d-element"></div>
+    <div class="bg-3d-element"></div>
+    <div class="bg-3d-element"></div>
+    <div class="bg-3d-element"></div>
+    <div class="bg-3d-element"></div>
+    <div class="bg-3d-element"></div>
+  </div>
+  
+  <!-- 3D Grid -->
+  <div class="bg-3d-grid"></div>
+  
+  <!-- 3D Light Rays -->
+  <div class="bg-3d-rays"></div>
+
+  <!-- Advanced Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">
+        <div class="logo-container">
+          <img src="{{ url_for('static', filename='images/broaderai_logo.png') }}" alt="BroderAI Logo">
+        </div>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('dashboard') }}">
+                <i data-feather="home"></i>
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('quiz') }}">
+                <i data-feather="help-circle"></i>
+                Take Quiz
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('content') }}">
+                <i data-feather="book"></i>
+                Content Library
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('verify_search') }}">
+              <i data-feather="check-circle"></i>
+              Certificate Verification
             </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    {% if current_user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('dashboard') }}">
-                                <i data-feather="home"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('quiz') }}">
-                                <i data-feather="help-circle"></i>
-                                Take Quiz
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('content') }}">
-                                <i data-feather="book"></i>
-                                Content Library
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('verify_search') }}">
-                            <i data-feather="check-circle"></i>
-                            Certificate Verification
-                        </a>
-                    </li>
-                    {% if current_user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('logout') }}">
-                                <i data-feather="log-out"></i>
-                                Logout
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login') }}">
-                                <i data-feather="log-in"></i>
-                                Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('register') }}">
-                                <i data-feather="user-plus"></i>
-                                Registration
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Flash Messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="container mt-3">
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-    
-    <!-- Main Content -->
-    <main class="container my-4">
-        {% block content %}{% endblock %}
-    </main>
-    
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <p>&copy; 2025 Adaptive Learning Platform. Powered by AI and Machine Learning.</p>
+          </li>
+          {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">
+                <i data-feather="log-out"></i>
+                Logout
+              </a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('login') }}">
+                <i data-feather="log-in"></i>
+                Login
+              </a>
+            </li>
+            <li class="nav-item ms-2">
+              <a class="btn btn-primary" href="{{ url_for('register') }}">
+                Register
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container mt-4">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  
+  <!-- Main Content -->
+  <main class="container my-5">
+    {% block content %}
+      <div class="card p-5">
+        <div class="text-center">
+          <h1 class="display-4 mb-4">Welcome to BroderAI Learning Platform</h1>
+          <p class="lead mb-4">
+            Master advanced concepts in machine learning, artificial intelligence, and data science. 
+            Our adaptive learning platform helps you understand complex topics through interactive quizzes and comprehensive content.
+          </p>
+          
+          <div class="row g-4 mb-4">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i data-feather="cpu" class="mb-3" style="width: 48px; height: 48px; color: var(--primary-color);"></i>
+                  <h5 class="card-title">AI Assessment</h5>
+                  <p class="card-text">Test your knowledge with our adaptive quiz system</p>
                 </div>
-                <div class="col-md-4 text-end">
-                    <p>Built with Flask, TensorFlow, and scikit-learn</p>
-                </div>
+              </div>
             </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i data-feather="book" class="mb-3" style="width: 48px; height: 48px; color: var(--success-color);"></i>
+                  <h5 class="card-title">Learning Resources</h5>
+                  <p class="card-text">Access comprehensive study materials and tutorials</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i data-feather="trending-up" class="mb-3" style="width: 48px; height: 48px; color: var(--warning-color);"></i>
+                  <h5 class="card-title">Progress Tracking</h5>
+                  <p class="card-text">Monitor your learning progress and achievements</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="{{ url_for('quiz') }}" class="btn btn-primary">
+              <i data-feather="play" class="me-2"></i>
+              Start Learning
+            </a>
+            <a href="{{ url_for('content') }}" class="btn btn-outline-primary">
+              <i data-feather="book-open" class="me-2"></i>
+              Browse Content
+            </a>
+          </div>
         </div>
-    </footer>
-    
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Initialize Feather Icons -->
-    <script>
-        feather.replace();
-    </script>
-    
-    {% block scripts %}{% endblock %}
+      </div>
+    {% endblock %}
+  </main>
+  
+  <!-- Advanced Footer - Only show on homepage -->
+  {% if request.endpoint == 'index' %}
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <p class="mb-2">
+            <strong>BroderAI - Advanced Learning Platform</strong>
+          </p>
+          <small class="text-muted">
+            Empowering learners with cutting-edge AI and machine learning education
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% endif %}
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Initialize Feather Icons -->
+  <script>
+    feather.replace();
+  </script>
+  
+  {% block scripts %}{% endblock %}
 </body>
 </html>

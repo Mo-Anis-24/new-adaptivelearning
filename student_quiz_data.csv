@@ -5084,3 +5084,25 @@ user_id,subject,difficulty,score,time_spent,learning_style,skill_level
 2,Data Science,beginner,100.0,25,visual,advanced
 2,Data Science,beginner,13.333333333333334,22,visual,advanced
 2,Python,beginner,26.666666666666668,23,visual,advanced
+2,AI,beginner,33.33333333333333,123,visual,advanced
+2,Python,beginner,13.333333333333334,30,visual,advanced
+2,React,beginner,40.0,50,visual,advanced
+2,React,beginner,40.0,53,visual,advanced
+2,DevOps,beginner,26.666666666666668,31,visual,advanced
+2,DevOps,beginner,20.0,29,visual,advanced
+2,DevOps,beginner,20.0,32,visual,advanced
+1,React,beginner,33.33333333333333,23,visual,beginner
+1,React,beginner,33.33333333333333,25,visual,beginner
+1,React,beginner,40.0,39,visual,beginner
+1,React,beginner,26.666666666666668,24,visual,beginner
+2,React,beginner,33.33333333333333,32,visual,advanced
+2,Data Science,beginner,33.33333333333333,59,visual,advanced
+2,Data Science,beginner,40.0,42,visual,advanced
+2,Data Science,beginner,6.666666666666667,35,visual,advanced
+7,AI,beginner,53.333333333333336,44,visual,beginner
+7,CSS,beginner,13.333333333333334,30,visual,beginner
+7,DevOps,beginner,26.666666666666668,27,visual,beginner
+7,Python,beginner,100.0,122,visual,beginner
+7,Data Science,beginner,86.66666666666667,92,visual,beginner
+7,Python,beginner,100.0,94,visual,beginner
+7,Data Science,beginner,100.0,89,visual,beginner

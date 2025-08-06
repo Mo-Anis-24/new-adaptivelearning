@@ -43,6 +43,7 @@ class Content(db.Model):
     difficulty_level = db.Column(db.String(50), nullable=False)  # 'beginner', 'intermediate', 'advanced'
     subject = db.Column(db.String(100), nullable=False)
     tags = db.Column(db.Text)  # JSON string of tags
+    content_url = db.Column(db.String(500), nullable=True)  # Direct link to content
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
@@ -93,3 +94,13 @@ class LoginActivity(db.Model):
     login_time = db.Column(db.DateTime, default=datetime.utcnow)
     ip_address = db.Column(db.String(45), nullable=True)
     user_agent = db.Column(db.String(256), nullable=True)
+
+class PasswordReset(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    token = db.Column(db.String(100), unique=True, nullable=False)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    used = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    user = db.relationship('User', backref='password_resets')

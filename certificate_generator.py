@@ -4,24 +4,107 @@ import os
 import uuid
 import random
 import csv
-from flask import current_app
+import sqlite3
 
 class CertificateGenerator:
     def __init__(self):
-        self.title = "Broader AI"
-        self.cert_title = "Broader AI Certified"
+        self.title = "BROADER AI"
+        self.tagline = "TOWARDS AUTOMATION"
+        self.cert_title = "CERTIFICATE OF ACHIEVEMENT"
         self.signature_path = os.path.join('static', 'images', 'broderai_signature.jpg')
-        self.issuer = "Broader AI"
+        self.issuer_name = "MOHAMMAD SOAEB RATHOD"
+        self.issuer_title = "FOUNDER"
         self.cert_csv = 'certificates.csv'
+        self.db_path = 'instance/adaptive_learning.db'
+
+    def generate_unique_series_id(self):
+        """Generate a unique 10-digit series ID"""
+        while True:
+            series_id = str(random.randint(10**9, 10**10 - 1))
+            if not self.series_id_exists(series_id):
+                return series_id
+
+    def series_id_exists(self, series_id):
+        """Check if series ID already exists in database"""
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) FROM certificates WHERE series_id = ?", (series_id,))
+            count = cursor.fetchone()[0]
+            conn.close()
+            return count > 0
+        except:
+            return False
+
+    def save_certificate_to_db(self, series_id, user_name, subject, issue_date, expiry_date, score):
+        """Save certificate details to database"""
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+         
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS certificates (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    series_id TEXT UNIQUE NOT NULL,
+                    user_name TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    issue_date TEXT NOT NULL,
+                    expiry_date TEXT NOT NULL,
+                    score INTEGER,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+         
+            cursor.execute('''
+                INSERT INTO certificates (series_id, user_name, subject, issue_date, expiry_date, score)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (series_id, user_name, subject, issue_date, expiry_date, score))
+            
+            conn.commit()
+            conn.close()
+            return True
+        except Exception as e:
+            print(f"Error saving certificate: {e}")
+            return False
+
+    def verify_certificate(self, series_id):
+        """Verify certificate by series ID"""
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT series_id, user_name, subject, issue_date, expiry_date, score
+                FROM certificates WHERE series_id = ?
+            ''', (series_id,))
+            result = cursor.fetchone()
+            conn.close()
+            
+            if result:
+                return {
+                    'series_id': result[0],
+                    'user_name': result[1],
+                    'subject': result[2],
+                    'issue_date': result[3],
+                    'expiry_date': result[4],
+                    'score': result[5],
+                    'valid': True
+                }
+            else:
+                return {'valid': False, 'message': 'Certificate not found'}
+        except Exception as e:
+            return {'valid': False, 'message': f'Error: {e}'}
 
     def generate_certificate(self, user_name, subject, score, date=None, output_path=None):
         if date is None:
             date = datetime.now().strftime('%d %b %Y')
         issue_date = datetime.now().strftime('%d %b %Y')
         expiry_date = (datetime.now().replace(year=datetime.now().year + 2)).strftime('%d %b %Y')
-        # Generate a random 10-digit numeric Series ID
-        cert_id = str(random.randint(10**9, 10**10 - 1))
+        
+        # Generate unique series ID
+        series_id = self.generate_unique_series_id()
 
+        # Create PDF
         pdf = FPDF('L', 'mm', 'A4')
         pdf.add_page()
         pdf.set_auto_page_break(auto=True, margin=15)
@@ -29,110 +112,22 @@ class CertificateGenerator:
         page_width = 297
         page_height = 210
 
-        # Draw pure white background
-        pdf.set_fill_color(255, 255, 255)  # pure white
+        # Draw white background
+        pdf.set_fill_color(255, 255, 255)
         pdf.rect(0, 0, page_width, page_height, 'F')
 
-        # Draw a thin border around the certificate
-        border_color = (30, 144, 255)  
-        pdf.set_draw_color(*border_color)
-        border_margin = 6  # mm from edge
-        border_width = page_width - 2 * border_margin
-        border_height = page_height - 2 * border_margin
-        pdf.set_line_width(1)
-        pdf.rect(border_margin, border_margin, border_width, border_height)
-
-        # Header - Broader AI logo instead of text
-        logo_path = os.path.join(current_app.root_path, 'static', 'images', 'broaderai_logo.png')
-        logo_w = 60  # width in mm
-        logo_h = 25  # height in mm (adjust as needed)
-        # Center the logo
-        if os.path.exists(logo_path):
-            logo_x = (page_width - logo_w) / 2
-            pdf.image(logo_path, x=logo_x, y=10, w=logo_w, h=logo_h)
-            pdf.ln(logo_h + 5)
+        # Add certificate template image
+        certificate_frame_path = os.path.join('static', 'images', 'cc2222.png')
+        if os.path.exists(certificate_frame_path):
+            pdf.image(certificate_frame_path, x=0, y=0, w=page_width, h=page_height)
         else:
-            pdf.set_font('Arial', 'B', 32)
-            pdf.set_text_color(30, 144, 255)  # Dodger Blue
-            pdf.cell(0, 20, self.title, ln=True, align='C')
-            pdf.ln(5)
+            print(f"Warning: Certificate template not found at {certificate_frame_path}")
 
-        # Subtitle
-        pdf.set_font('Arial', '', 16)
-        pdf.set_text_color(0, 0, 0)
-        pdf.cell(0, 10, 'This acknowledges that', ln=True, align='C')
-        pdf.ln(2)
+        # Add certificate details
+        self.add_certificate_details(pdf, series_id, user_name, subject, issue_date, expiry_date, score)
 
-        # User Name
-        pdf.set_font('Arial', 'B', 28)
-        pdf.cell(0, 15, user_name, ln=True, align='C')
-        pdf.ln(2)
-
-        # Achievement text (updated as per request)
-        pdf.set_font('Arial', '', 16)
-        pdf.cell(0, 10, 'Has Successfully Completed All The Requirements To Be Recognized As a', ln=True, align='C')
-        pdf.ln(2)
-
-        # Certification Title
-        pdf.set_font('Arial', 'B', 22)
-        pdf.set_text_color(0, 0, 0)
-        pdf.cell(0, 15, self.cert_title, ln=True, align='C')
-        pdf.ln(2)
-
-        # Subject as Certification
-        pdf.set_font('Arial', '', 20)
-        pdf.cell(0, 12, subject, ln=True, align='C')
-        pdf.ln(20)  # Extra space before footer/signature
-
-      
-        # Footer details (ID, dates)
-        pdf.set_font('Arial', '', 10)
-        pdf.set_text_color(80, 80, 80)
-        pdf.set_y(-55)
-        pdf.cell(0, 6, f'Series ID: {cert_id}', ln=1, align='L')
-        pdf.cell(0, 6, f'Issue Date: {issue_date}', ln=1, align='L')
-        pdf.cell(0, 6, f'Expiration Date: {expiry_date}', ln=1, align='L')
-        pdf.cell(0, 6, f'Certified As: {user_name}', ln=1, align='L')
-
-        # Signature image and issuer text (bottom right, perfect vertical stack)
-        pdf.set_auto_page_break(auto=False)
-        margin_right = 20
-        margin_bottom = 20
-        sig_w = 60
-        sig_h = 20  # approx height in mm, adjust as needed
-        sig_x = page_width - sig_w - margin_right
-        sig_y = page_height - sig_h - margin_bottom - 15  # 15mm above bottom
-        # Prefer transparent PNG signature if available
-        signature_png_path = os.path.join(current_app.root_path, 'static', 'images', 'broderai_signature.png')
-        if os.path.exists(signature_png_path):
-            signature_abs_path = signature_png_path
-        else:
-            signature_abs_path = os.path.join(current_app.root_path, self.signature_path)
-
-        if os.path.exists(signature_abs_path):
-            pdf.image(signature_abs_path, x=sig_x, y=sig_y, w=sig_w, h=sig_h)
-            # CEO text just below signature, with 4mm gap
-            ceo_text_y = sig_y + sig_h + 4
-            pdf.set_xy(sig_x, ceo_text_y)
-            pdf.set_font('Arial', '', 12)
-            pdf.cell(sig_w, 8, "CEO, Broader AI", align='R')
-        else:
-            pdf.set_xy(sig_x, sig_y)
-            pdf.set_font('Arial', 'I', 10)
-            pdf.cell(sig_w, 10, '[Signature not found]', align='R')
-            ceo_text_y = sig_y + sig_h + 4
-            pdf.set_xy(sig_x, ceo_text_y)
-            pdf.set_font('Arial', '', 12)
-            pdf.cell(sig_w, 8, "CEO, Broader AI", align='R')
-
-        # Save certificate details to CSV for verification
-        cert_row = [cert_id, user_name, subject, issue_date, expiry_date]
-        file_exists = os.path.isfile(self.cert_csv)
-        with open(self.cert_csv, 'a', newline='', encoding='utf-8') as csvfile:
-            writer = csv.writer(csvfile)
-            if not file_exists:
-                writer.writerow(['series_id', 'user_name', 'subject', 'issue_date', 'expiry_date'])
-            writer.writerow(cert_row)
+        # Save to database
+        self.save_certificate_to_db(series_id, user_name, subject, issue_date, expiry_date, score)
 
         # Output
         if output_path:
@@ -140,3 +135,55 @@ class CertificateGenerator:
             return output_path
         else:
             return pdf.output(dest='S').encode('latin1')
+
+    def add_certificate_details(self, pdf, series_id, user_name, subject, issue_date, expiry_date, score):
+        """Add certificate details to the PDF"""
+        page_width = 297
+        page_height = 210
+        
+        # Safe margins for text placement
+        safe_margin_x = 35
+        safe_margin_top = 40
+        safe_margin_bottom = 40
+        content_width = page_width - 2 * safe_margin_x
+
+        # Certificate title
+        pdf.set_font('Arial', 'B', 16)
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_xy(safe_margin_x, safe_margin_top + 35)
+        pdf.cell(content_width, 10, "OF ACHIEVEMENT", ln=True, align='C')
+
+        # Recipient name
+        pdf.set_font('Times', 'B', 30)
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_xy(safe_margin_x, safe_margin_top + 55)
+        pdf.cell(content_width, 20, user_name.upper(), ln=True, align='C')
+
+        # Achievement text
+        pdf.set_font('Arial', '', 14)
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_xy(safe_margin_x, safe_margin_top + 75)
+        pdf.cell(content_width, 8, "Has Successfully Completed All The Requirements To Be Recognized As a", ln=True, align='C')
+
+        # Subject/Certification area
+        pdf.set_font('Times', 'B', 20)
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_xy(safe_margin_x, safe_margin_top + 90)
+        pdf.cell(content_width, 12, subject, ln=True, align='C')
+
+        # Certificate details (bottom left)
+        pdf.set_font('Arial', '', 8)
+        pdf.set_text_color(80, 80, 80)
+        
+        details_x = page_width - 230
+        details_y = page_height - 35
+        
+        pdf.set_xy(details_x, details_y)
+        pdf.cell(100, 4, f'Series ID: {series_id}', ln=1, align='L')
+        pdf.set_x(details_x)
+        pdf.cell(100, 4, f'Issue Date: {issue_date}', ln=1, align='L')
+        pdf.set_x(details_x)
+        pdf.cell(100, 4, f'Expiration Date: {expiry_date}', ln=1, align='L')
+        pdf.set_x(details_x)
+        pdf.cell(100, 4, f'Certified As: {user_name}', ln=1, align='L')
+        

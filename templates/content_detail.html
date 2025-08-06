@@ -53,10 +53,18 @@
                         <i data-feather="arrow-left"></i>
                         Back to Library
                     </a>
-                    <a href="{{ url_for('quiz') }}" class="btn btn-primary">
-                        <i data-feather="play"></i>
-                        Take Quiz
-                    </a>
+                    <div class="btn-group" role="group">
+                        {% if content.content_url %}
+                        <a href="{{ content.content_url }}" class="btn btn-success" target="_blank">
+                            <i data-feather="external-link"></i>
+                            Access Content
+                        </a>
+                        {% endif %}
+                        <a href="{{ url_for('quiz') }}" class="btn btn-primary">
+                            <i data-feather="play"></i>
+                            Take Quiz
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

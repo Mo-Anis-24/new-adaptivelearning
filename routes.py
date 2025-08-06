@@ -1,19 +1,67 @@
 from flask import render_template, request, redirect, url_for, flash, jsonify, session
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import time
 import pandas as pd
 import os
 import csv
+import secrets
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from app import app, db
-from models import User, Content, QuizAttempt, UserInteraction, QuizQuestion
+from models import User, Content, QuizAttempt, UserInteraction, QuizQuestion, PasswordReset
 from ml_models import model_manager
 from quiz_generator import quiz_generator
 from content_manager import get_content_manager
 from certificate_generator import CertificateGenerator
+import email_config
+
+def send_reset_email(user_email, reset_url):
+    """Send password reset email"""
+    try:
+        # For development, we'll use a simple print instead of actual email
+        print(f"Password reset email would be sent to: {user_email}")
+        print(f"Reset URL: {reset_url}")
+        print("In production, configure SMTP settings to send actual emails")
+        
+        # Check if Gmail is enabled in email_config.py
+        if hasattr(email_config, 'GMAIL_ENABLED') and email_config.GMAIL_ENABLED:
+            try:
+                msg = MIMEMultipart()
+                msg['From'] = email_config.GMAIL_EMAIL
+                msg['To'] = user_email
+                msg['Subject'] = "Password Reset Request - BroderAI Learning Platform"
+                
+                body = f"Hello,\n\nYou have requested a password reset for your BroderAI Learning Platform account.\n\nClick the following link to reset your password:\n{reset_url}\n\nThis link will expire in 1 hour.\n\nIf you didn't request this reset, please ignore this email.\n\nBest regards,\nBroderAI Team"
+                
+                msg.attach(MIMEText(body, 'plain'))
+                
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+                server.login(email_config.GMAIL_EMAIL, email_config.GMAIL_PASSWORD)
+                text = msg.as_string()
+                server.sendmail(email_config.GMAIL_EMAIL, user_email, text)
+                server.quit()
+                
+                print(f"✅ Email sent successfully to {user_email}")
+                return True
+                
+            except Exception as e:
+                print(f"❌ Error sending email via Gmail: {e}")
+                print("📧 Email configuration failed. Check email_config.py settings.")
+                return False
+        else:
+            print("📧 Gmail not enabled. Update email_config.py to enable email sending.")
+            print("📧 For now, check the console above for the reset link.")
+            return True
+        
+    except Exception as e:
+        print(f"Error in send_reset_email: {e}")
+        return False
 
 @app.route('/')
 def index():
@@ -66,12 +114,15 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """User login"""
+    """User login with username or email"""
     if request.method == 'POST':
-        username = request.form['username']
+        username_or_email = request.form['username']
         password = request.form['password']
         
-        user = User.query.filter_by(username=username).first()
+        # Try to find user by username first, then by email
+        user = User.query.filter_by(username=username_or_email).first()
+        if not user:
+            user = User.query.filter_by(email=username_or_email).first()
         
         if user and user.check_password(password):
             login_user(user)
@@ -86,9 +137,89 @@ def login():
             db.session.commit()
             return redirect(url_for('dashboard'))
         else:
-            flash('Invalid username or password', 'error')
+            flash('Invalid username/email or password', 'error')
     
     return render_template('login.html')
+
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    """Forgot password functionality"""
+    if request.method == 'POST':
+        email = request.form['email']
+        user = User.query.filter_by(email=email).first()
+        
+        if user:
+            # Generate reset token
+            token = secrets.token_urlsafe(32)
+            expires_at = datetime.utcnow() + timedelta(hours=1)
+            
+            # Create password reset record
+            reset_record = PasswordReset(
+                user_id=user.id,
+                token=token,
+                expires_at=expires_at
+            )
+            db.session.add(reset_record)
+            db.session.commit()
+            
+            # Generate reset URL
+            reset_url = url_for('reset_password', token=token, _external=True)
+            
+            # Send reset email
+            if send_reset_email(email, reset_url):
+                flash('Password reset link has been sent to your email address.', 'success')
+            else:
+                flash('Error sending reset email. Please try again later.', 'error')
+        else:
+            # Don't reveal if email exists or not for security
+            flash('If an account with that email exists, a password reset link has been sent.', 'success')
+        
+        return redirect(url_for('login'))
+    
+    return render_template('forgot_password.html')
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    """Reset password with token"""
+    # Find the reset record
+    reset_record = PasswordReset.query.filter_by(
+        token=token, 
+        used=False
+    ).first()
+    
+    if not reset_record:
+        flash('Invalid or expired reset link.', 'error')
+        return redirect(url_for('login'))
+    
+    if reset_record.expires_at < datetime.utcnow():
+        flash('Reset link has expired. Please request a new one.', 'error')
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        
+        if password != confirm_password:
+            flash('Passwords do not match.', 'error')
+            return render_template('reset_password.html', token=token)
+        
+        if len(password) < 6:
+            flash('Password must be at least 6 characters long.', 'error')
+            return render_template('reset_password.html', token=token)
+        
+        # Update user password
+        user = User.query.get(reset_record.user_id)
+        user.set_password(password)
+        
+        # Mark reset token as used
+        reset_record.used = True
+        
+        db.session.commit()
+        
+        flash('Your password has been reset successfully. You can now login with your new password.', 'success')
+        return redirect(url_for('login'))
+    
+    return render_template('reset_password.html', token=token)
 
 @app.route('/logout')
 @login_required
@@ -300,8 +431,7 @@ def download_certificate():
         }
     )
 
-# Remove the old verify_certificate route
-# Add new public verification route
+# Certificate verification route using database
 @app.route('/vb', methods=['GET', 'POST'])
 def verify_search():
     cert_data = None
@@ -311,19 +441,16 @@ def verify_search():
         if not series_id.isdigit():
             error = 'Please enter a valid numeric Series ID.'
         else:
-            cert_file = 'certificates.csv'
             try:
-                import csv
-                with open(cert_file, newline='', encoding='utf-8') as csvfile:
-                    reader = csv.DictReader(csvfile)
-                    for row in reader:
-                        if row['series_id'] == series_id:
-                            cert_data = row
-                            break
-                    if not cert_data:
-                        error = 'Certificate not found for this Series ID.'
-            except FileNotFoundError:
-                error = 'No certificates have been issued yet.'
+                cert_gen = CertificateGenerator()
+                verification_result = cert_gen.verify_certificate(series_id)
+                
+                if verification_result.get('valid'):
+                    cert_data = verification_result
+                else:
+                    error = verification_result.get('message', 'Certificate not found for this Series ID.')
+            except Exception as e:
+                error = f'Error verifying certificate: {str(e)}'
     return render_template('verify_search.html', cert_data=cert_data, error=error)
     
 @app.errorhandler(404)

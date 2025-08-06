@@ -75,10 +75,18 @@
                         <i data-feather="calendar"></i>
                         {{ content.created_at.strftime('%Y-%m-%d') }}
                     </small>
-                    <a href="{{ url_for('view_content', content_id=content.id) }}" class="btn btn-primary btn-sm">
-                        <i data-feather="eye"></i>
-                        View Content
-                    </a>
+                    <div class="btn-group" role="group">
+                        {% if content.content_url %}
+                        <a href="{{ content.content_url }}" class="btn btn-success btn-sm" target="_blank">
+                            <i data-feather="external-link"></i>
+                            Direct Link
+                        </a>
+                        {% endif %}
+                        <a href="{{ url_for('view_content', content_id=content.id) }}" class="btn btn-primary btn-sm">
+                            <i data-feather="eye"></i>
+                            View Details
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

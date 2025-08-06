@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>{% block title %}BroderAI · Advanced Learning Platform{% endblock %}</title>
+
+  <!-- Bootstrap 5.3 -->
+  <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+  
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+      /*====== Advanced Sky Theme Variables ======*/
+      :root {
+        --primary-blue: #2563eb;
+        --primary-dark: #1e40af;
+        --accent-gold: #f59e0b;
+        --tech-cyan: #06b6d4;
+        --tech-purple: #8b5cf6;
+        --sky-light: #87ceeb;
+        --sky-dark: #4682b4;
+        --cloud-white: rgba(255, 255, 255, 0.8);
+        --text-primary: #1f2937;
+        --text-secondary: #6b7280;
+        --bg-white: #ffffff;
+        --border-light: #e5e7eb;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      }
+
+      /*====== Sky Background with Moving Formulas ======*/
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--text-primary);
+        line-height: 1.6;
+        position: relative;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Beautiful Sky Background */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -3;
+        background: linear-gradient(
+          180deg,
+          #87ceeb 0%,     /* Light sky blue at top */
+          #98d8eb 25%,    /* Slightly deeper */
+          #5fb3d4 50%,    /* Medium blue */
+          #4682b4 75%,    /* Steel blue */
+          #2e5984 100%    /* Darker at bottom */
+        );
+        animation: skyShift 30s ease-in-out infinite alternate;
+      }
+
+      @keyframes skyShift {
+        0% { 
+          background: linear-gradient(180deg, #87ceeb 0%, #98d8eb 25%, #5fb3d4 50%, #4682b4 75%, #2e5984 100%);
+        }
+        100% { 
+          background: linear-gradient(180deg, #a4d4f4 0%, #7ec8e3 25%, #4fa8c5 50%, #3a7ca8 75%, #1e4f73 100%);
+        }
+      }
+
+      /* Floating Clouds */
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background-image: 
+          radial-gradient(ellipse 200px 100px at 20% 30%, var(--cloud-white) 0%, transparent 50%),
+          radial-gradient(ellipse 300px 150px at 80% 20%, rgba(255,255,255,0.6) 0%, transparent 50%),
+          radial-gradient(ellipse 250px 120px at 60% 60%, rgba(255,255,255,0.4) 0%, transparent 50%),
+          radial-gradient(ellipse 180px 90px at 30% 80%, rgba(255,255,255,0.5) 0%, transparent 50%);
+        animation: cloudFloat 60s linear infinite;
+      }
+
+      @keyframes cloudFloat {
+        0% { transform: translateX(-100px); }
+        100% { transform: translateX(100px); }
+      }
+
+      /* Mathematical Formulas in the Sky */
+      .math-sky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .formula-cloud {
+        position: absolute;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 
+          0 0 10px rgba(255, 255, 255, 0.8),
+          0 0 20px rgba(37, 99, 235, 0.6),
+          0 0 30px rgba(6, 182, 212, 0.4);
+        white-space: nowrap;
+        font-size: 1rem;
+        animation: formulaFloat 20s ease-in-out infinite;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 8px 12px;
+        border-radius: 15px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* Different animation patterns for variety */
+      .formula-cloud:nth-child(2n) {
+        animation: formulaFloat2 25s ease-in-out infinite;
+        animation-delay: -5s;
+      }
+
+      .formula-cloud:nth-child(3n) {
+        animation: formulaFloat3 30s ease-in-out infinite;
+        animation-delay: -10s;
+      }
+
+      .formula-cloud:nth-child(4n) {
+        animation: formulaFloat4 22s ease-in-out infinite;
+        animation-delay: -7s;
+      }
+
+      .formula-cloud:nth-child(5n) {
+        font-size: 1.1rem;
+        color: rgba(139, 92, 246, 0.9);
+        text-shadow: 
+          0 0 10px rgba(139, 92, 246, 0.8),
+          0 0 20px rgba(139, 92, 246, 0.6);
+      }
+
+      @keyframes formulaFloat {
+        0% { 
+          transform: translateX(-100px) translateY(0px) rotate(0deg);
+          opacity: 0;
+        }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { 
+          transform: translateX(calc(100vw + 100px)) translateY(-50px) rotate(5deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes formulaFloat2 {
+        0% { 
+          transform: translateX(calc(100vw + 100px)) translateY(0px) rotate(0deg);
+          opacity: 0;
+        }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { 
+          transform: translateX(-100px) translateY(30px) rotate(-3deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes formulaFloat3 {
+        0% { 
+          transform: translateX(-50px) translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { 
+          transform: translateX(50px) translateY(-100px) rotate(2deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes formulaFloat4 {
+        0% { 
+          transform: translateX(50%) translateY(-100px) rotate(0deg);
+          opacity: 0;
+        }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { 
+          transform: translateX(50%) translateY(100vh) rotate(-2deg);
+          opacity: 0;
+        }
+      }
+
+      /*====== Professional Navigation with Transparency ======*/
+      .navbar {
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(15px);
+        box-shadow: var(--shadow-md);
+        border-bottom: 3px solid var(--primary-blue);
+        padding: 1rem 0;
+        position: relative;
+        z-index: 1000;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--primary-blue) !important;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      /*====== Enhanced Logo Container ======*/
+      .logo-container {
+        position: relative;
+        padding: 0.5rem;
+        background: linear-gradient(135deg, var(--primary-blue), var(--tech-cyan));
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .logo-container::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, var(--primary-blue), var(--tech-cyan), var(--tech-purple), var(--primary-blue));
+        border-radius: 14px;
+        z-index: -1;
+        animation: logoGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes logoGlow {
+        0% { opacity: 0.8; transform: scale(1); }
+        100% { opacity: 1; transform: scale(1.02); }
+      }
+
+      .logo-container:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15);
+      }
+
+      .logo-container img {
+        filter: brightness(1.1) contrast(1.1);
+        border-radius: 8px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .brand-text {
+        background: linear-gradient(135deg, var(--primary-blue), var(--tech-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        position: relative;
+      }
+
+      /*====== Navigation Links ======*/
+      .nav-link {
+        color: var(--text-secondary) !important;
+        font-weight: 500;
+        padding: 0.5rem 1rem !important;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: var(--primary-blue) !important;
+        background-color: rgba(37, 99, 235, 0.1);
+        transform: translateY(-1px);
+      }
+
+      /*====== Advanced Buttons ======*/
+      .btn-primary-custom {
+        background: linear-gradient(135deg, var(--primary-blue), var(--tech-cyan));
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        color: white;
+        text-decoration: none;
+      }
+
+      .btn-outline-custom {
+        border: 2px solid var(--primary-blue);
+        color: var(--primary-blue);
+        background: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+        backdrop-filter: blur(10px);
+      }
+
+      .btn-outline-custom:hover {
+        background: var(--primary-blue);
+        color: white;
+        text-decoration: none;
+      }
+
+      /*====== Advanced Cards ======*/
+      .card-advanced {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(15px);
+      }
+
+      .card-advanced::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-blue), var(--tech-cyan), var(--tech-purple));
+        animation: cardTopGlow 3s ease-in-out infinite;
+      }
+
+      @keyframes cardTopGlow {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+
+      .card-advanced:hover {
+        box-shadow: 0 25px 35px -5px rgb(0 0 0 / 0.15);
+        transform: translateY(-5px);
+      }
+
+      /*====== Mathematical Content Styling ======*/
+      .math-content {
+        font-family: 'JetBrains Mono', monospace;
+        background: rgba(248, 250, 252, 0.9);
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid var(--tech-cyan);
+        margin: 1rem 0;
+        backdrop-filter: blur(10px);
+      }
+
+      /*====== Alert Styling ======*/
+      .alert {
+        border: none;
+        border-radius: 8px;
+        box-shadow: var(--shadow-sm);
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      /*====== Footer ======*/
+      .footer-advanced {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        margin-top: 4rem;
+        position: relative;
+      }
+
+      /*====== Typography ======*/
+      .display-title {
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.2;
+        position: relative;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .lead-text {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        font-weight: 400;
+      }
+
+      /*====== Code Styling ======*/
+      .code-snippet {
+        background: rgba(30, 41, 59, 0.95);
+        color: #e2e8f0;
+        padding: 1rem;
+        border-radius: 8px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        overflow-x: auto;
+        border: 1px solid var(--tech-cyan);
+        backdrop-filter: blur(10px);
+      }
+
+      /*====== Responsive Design ======*/
+      @media (max-width: 768px) {
+        .formula-cloud {
+          font-size: 0.8rem;
+          padding: 6px 10px;
+        }
+        
+        .navbar-brand {
+          font-size: 1.25rem;
+        }
+        
+        .logo-container {
+          padding: 0.25rem;
+        }
+        
+        .brand-text {
+          display: none;
+        }
+      }
+  </style>
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Mathematical Formulas Floating in Sky -->
+  <div class="math-sky">
+    <!-- Neural Network & Deep Learning Formulas -->
+    <div class="formula-cloud" style="top: 10%; animation-delay: 0s;">∇L = ∂L/∂w × ∂w/∂net × ∂net/∂x</div>
+    <div class="formula-cloud" style="top: 20%; animation-delay: -3s;">Attention(Q,K,V) = softmax(QK^T/√d_k)V</div>
+    <div class="formula-cloud" style="top: 30%; animation-delay: -6s;">f_t = σ(W_f·[h_{t-1}, x_t] + b_f)</div>
+    <div class="formula-cloud" style="top: 40%; animation-delay: -9s;">L = -Σ[y_i log(ŷ_i) + (1-y_i)log(1-ŷ_i)]</div>
+    <div class="formula-cloud" style="top: 50%; animation-delay: -12s;">θ_{n+1} = θ_n - α∇f(θ_n)</div>
+    <div class="formula-cloud" style="top: 60%; animation-delay: -15s;">S(i,j) = (I * K)(i,j) = ΣΣ I(i+m,j+n)K(m,n)</div>
+    <div class="formula-cloud" style="top: 70%; animation-delay: -18s;">H(X) = -Σ p(x_i)log_2 p(x_i)</div>
+    <div class="formula-cloud" style="top: 80%; animation-delay: -21s;">min max V(D,G) = E[log D(x)] + E[log(1-D(G(z)))]</div>
+    
+    <!-- Additional Advanced Formulas -->
+    <div class="formula-cloud" style="top: 15%; animation-delay: -2s;">MultiHead(Q,K,V) = Concat(head_1,...,head_h)W^O</div>
+    <div class="formula-cloud" style="top: 25%; animation-delay: -5s;">VAE: L = E[log p(x|z)] - KL(q(z|x)||p(z))</div>
+    <div class="formula-cloud" style="top: 35%; animation-delay: -8s;">BatchNorm: ŷ = γ((x-μ)/σ) + β</div>
+    <div class="formula-cloud" style="top: 45%; animation-delay: -11s;">Adam: m_t = β_1 m_{t-1} + (1-β_1)g_t</div>
+    <div class="formula-cloud" style="top: 55%; animation-delay: -14s;">ResNet: H(x) = F(x) + x</div>
+    <div class="formula-cloud" style="top: 65%; animation-delay: -17s;">KL(P||Q) = Σ P(i)log(P(i)/Q(i))</div>
+    <div class="formula-cloud" style="top: 75%; animation-delay: -20s;">ReLU: f(x) = max(0,x)</div>
+    <div class="formula-cloud" style="top: 85%; animation-delay: -23s;">Dropout: r ~ Bernoulli(p), ỹ = r ⊙ y</div>
+    
+    <!-- Transformer & Advanced ML -->
+    <div class="formula-cloud" style="top: 12%; animation-delay: -1s;">PE(pos,2i) = sin(pos/10000^{2i/d_{model}})</div>
+    <div class="formula-cloud" style="top: 22%; animation-delay: -4s;">β̂ = (X^T X + λI)^{-1} X^T Y</div>
+    <div class="formula-cloud" style="top: 32%; animation-delay: -7s;">J(θ) = 1/(2m) Σ(h_θ(x^i) - y^i)^2</div>
+    <div class="formula-cloud" style="top: 42%; animation-delay: -10s;">p(y=1|x) = 1/(1 + e^{-θ^T x})</div>
+    <div class="formula-cloud" style="top: 52%; animation-delay: -13s;">∇_x L = 2(W^T W + λI)x - 2W^T Y</div>
+    <div class="formula-cloud" style="top: 62%; animation-delay: -16s;">BLEU = BP × exp(Σ w_n log p_n)</div>
+    <div class="formula-cloud" style="top: 72%; animation-delay: -19s;">ELBO = E_q[log p(x,z)] - E_q[log q(z)]</div>
+    <div class="formula-cloud" style="top: 82%; animation-delay: -22s;">IoU = |A ∩ B| / |A ∪ B|</div>
+  </div>
+
+  <!-- Professional Navigation -->
+  <nav class="navbar navbar-expand-lg">
+      <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+              <div class="logo-container">
+                  <img src="{{ url_for('static', filename='images/broaderai_logo.png') }}"
+                       alt="BroderAI Logo" height="40">
+              </div>
+              <span class="brand-text">BroderAI</span>
+          </a>
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto">
+                  {% if current_user.is_authenticated %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ url_for('dashboard') }}">
+                              <i data-feather="home"></i>
+                              Dashboard
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ url_for('quiz') }}">
+                              <i data-feather="help-circle"></i>
+                              AI Assessment
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ url_for('content') }}">
+                              <i data-feather="book"></i>
+                              Knowledge Base
+                          </a>
+                      </li>
+                  {% endif %}
+              </ul>
+              
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('verify_search') }}">
+                          <i data-feather="check-circle"></i>
+                          Verification
+                      </a>
+                  </li>
+                  {% if current_user.is_authenticated %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ url_for('logout') }}">
+                              <i data-feather="log-out"></i>
+                              Logout
+                          </a>
+                      </li>
+                  {% else %}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ url_for('login') }}">
+                              <i data-feather="log-in"></i>
+                              Login
+                          </a>
+                      </li>
+                      <li class="nav-item ms-2">
+                          <a class="btn btn-primary-custom" href="{{ url_for('register') }}">
+                              Join Advanced Learning
+                          </a>
+                      </li>
+                  {% endif %}
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="container mt-4">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  <!-- Main Content -->
+  <main class="container my-5">
+      {% block content %}
+          <div class="card-advanced p-5">
+              <div class="text-center">
+                  <h1 class="display-4 display-title mb-4">Advanced AI Learning Platform</h1>
+                  <p class="lead lead-text mb-4">
+                      Harness the power of advanced machine learning algorithms, neural networks, and deep learning architectures. 
+                      Our platform integrates cutting-edge AI research with adaptive learning methodologies.
+                  </p>
+                  
+                  <!-- Mathematical Content Example -->
+                  <div class="math-content mb-4">
+                      <p class="mb-2"><strong>Featured Algorithm:</strong> Transformer Attention Mechanism</p>
+                      <div class="code-snippet">
+Attention(Q,K,V) = softmax(QK^T/√d_k)V
+
+where:
+• Q = queries matrix (n × d_k)  
+• K = keys matrix (m × d_k)
+• V = values matrix (m × d_v)
+• d_k = key dimension for scaling
+                      </div>
+                  </div>
+                  
+                  <div class="d-flex flex-wrap justify-content-center gap-3">
+                      <a href="{{ url_for('quiz') }}" class="btn btn-primary-custom">
+                          <i data-feather="cpu" class="me-2"></i>
+                          Start AI Assessment
+                      </a>
+                      <a href="{{ url_for('content') }}" class="btn btn-outline-custom">
+                          <i data-feather="database" class="me-2"></i>
+                          Explore Algorithms
+                      </a>
+                  </div>
+              </div>
+          </div>
+      {% endblock %}
+  </main>
+
+  <!-- Advanced Footer -->
+  <footer class="footer-advanced py-4">
+      <div class="container">
+          <div class="row">
+              <div class="col-12 text-center">
+                  <p class="mb-0 text-muted">
+                      <i data-feather="zap" class="me-2"></i>
+                      <strong>BroderAI</strong> - Advanced Mathematical Intelligence & Deep Learning Research Platform
+                  </p>
+                  <small class="text-muted">
+                      Powered by Neural Networks • Transformers • Gradient Optimization • Reinforcement Learning
+                  </small>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Initialize Feather Icons -->
+  <script>
+      feather.replace();
+  </script>
+  
+  {% block scripts %}{% endblock %}
+</body>
+</html>
