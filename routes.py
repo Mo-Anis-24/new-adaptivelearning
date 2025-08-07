@@ -11,6 +11,7 @@ import secrets
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from random import randint
 
 from app import app, db
 from models import User, Content, QuizAttempt, UserInteraction, QuizQuestion, PasswordReset
@@ -61,6 +62,30 @@ def send_reset_email(user_email, reset_url):
         
     except Exception as e:
         print(f"Error in send_reset_email: {e}")
+        return False
+
+def send_otp_email(user_email, otp_code):
+    try:
+        if hasattr(email_config, 'GMAIL_ENABLED') and email_config.GMAIL_ENABLED:
+            msg = MIMEMultipart()
+            msg['From'] = email_config.GMAIL_EMAIL
+            msg['To'] = user_email
+            msg['Subject'] = "Your OTP for BroderAI Login"
+            body = f"Your OTP for login is: {otp_code}\nThis OTP is valid for 10 minutes."
+            msg.attach(MIMEText(body, 'plain'))
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login(email_config.GMAIL_EMAIL, email_config.GMAIL_PASSWORD)
+            text = msg.as_string()
+            server.sendmail(email_config.GMAIL_EMAIL, user_email, text)
+            server.quit()
+            print(f"✅ OTP email sent successfully to {user_email}")
+            return True
+        else:
+            print(f"OTP for {user_email}: {otp_code}")
+            return True
+    except Exception as e:
+        print(f"Error sending OTP email: {e}")
         return False
 
 @app.route('/')
